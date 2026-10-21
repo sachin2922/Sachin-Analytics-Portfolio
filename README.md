@@ -27,11 +27,11 @@ The portfolio is structured into four specialized domain repositories below:
 
 For hiring managers and recruiters looking for immediate interactive product demonstrations:
 
-1. **[RevOps Pipeline Health Analysis Dashboard (click to open)](https://sachin2922.github.io/Sachin-Analytics-Portfolio/RevOps_Pipeline_Health_Dashboard.html)**  
+1. **[RevOps Pipeline Health Analysis Dashboard (click to open)](https://sachin2922.github.io/Sachin-Analytics-Portfolio/RevOps-Projects/RevOps_Pipeline_Health_Dashboard.html)**  
    *Executive revenue operations command center identifying stuck pipeline stages, ACV distribution benchmarks, deal slippage risks, and prime account conversion velocity.*  
    * **Key Outcome:** +15% ARR expansion, +30% executive decision speed.
 
-2. **[Utilization & Efficiency Tracker (click to open)](https://sachin2922.github.io/Sachin-Analytics-Portfolio/Utilization%20%26%20Efficiency%20Tracker.html)**  
+2. **[Utilization & Efficiency Tracker (click to open)](https://sachin2922.github.io/Sachin-Analytics-Portfolio/Commercial-Analytics-Projects/Utilization%20%26%20Efficiency%20Tracker.html)**  
    *Full-scale workforce capacity planning suite tracking team utilization, timesheet allocation, ticket resolution velocity, and system TAT benchmarks.*  
    * **Key Outcome:** -60% manual reporting overhead, +40% TAT delivery acceleration.
 
