@@ -19,7 +19,7 @@ Welcome to my executive analytics portfolio. This repository showcases interacti
 
 ---
 
-## 1. [Utilization & Efficiency Tracker ↗](https://sachin2922.github.io/Sachin-Analytics-Portfolio/Utilization%20%26%20Efficiency%20Tracker.html)
+## 1. [Utilization & Efficiency Tracker (click to open)](https://sachin2922.github.io/Sachin-Analytics-Portfolio/Utilization%20%26%20Efficiency%20Tracker.html)
 
 ### 🎯 Business Problem
 * **Operational Blind Spots:** Cross-functional research and compliance teams lacked unified visibility into daily productive hours, sprint commitments, and individual workload distribution.
@@ -56,7 +56,7 @@ Welcome to my executive analytics portfolio. This repository showcases interacti
 
 ---
 
-## 2. [RevOps Pipeline Health Analysis ↗](https://sachin2922.github.io/Sachin-Analytics-Portfolio/RevOps_Pipeline_Health_Dashboard.html)
+## 2. [RevOps Pipeline Health Analysis (click to open)](https://sachin2922.github.io/Sachin-Analytics-Portfolio/RevOps_Pipeline_Health_Dashboard.html)
 
 ### 🎯 Business Problem
 * **Unpredictable Revenue Forecasting:** Sales and RevOps leadership suffered from late-stage deal slippage and inaccurate quarterly pipeline projections due to static CRM reports.
