@@ -1,0 +1,1114 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Intelligence Team Tracker</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
+<style>
+:root {
+  --bg-primary:#0A0F1E; --bg-secondary:#111827; --bg-card:#1E2A3B; --bg-card-hover:#243347;
+  --accent-blue:#3B82F6; --accent-blue-light:#60A5FA; --accent-emerald:#10B981;
+  --accent-amber:#F59E0B; --accent-rose:#F43F5E; --accent-purple:#8B5CF6;
+  --accent-cyan:#06B6D4; --accent-orange:#F97316;
+  --text-primary:#F1F5F9; --text-secondary:#94A3B8; --text-muted:#64748B;
+  --border:rgba(59,130,246,0.12); --sidebar-w:250px;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Inter',system-ui,sans-serif;background:var(--bg-primary);color:var(--text-primary);font-size:14px;display:flex;height:100vh;overflow:auto;min-width:1400px;}
+/* SIDEBAR */
+.sidebar{width:var(--sidebar-w);background:var(--bg-secondary);display:flex;flex-direction:column;border-right:1px solid var(--border);transition:width .3s ease;flex-shrink:0;overflow:hidden;}
+.sidebar.collapsed{width:64px;}
+.sb-logo{padding:18px 20px;display:flex;align-items:center;gap:12px;border-bottom:1px solid var(--border);min-height:64px;}
+.sb-logo-icon{width:36px;height:36px;background:var(--accent-blue);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px;color:#fff;flex-shrink:0;}
+.sb-logo-text{font-weight:700;font-size:15px;color:var(--accent-blue-light);white-space:nowrap;overflow:hidden;}
+.sidebar.collapsed .sb-logo-text{display:none;}
+.sb-section{padding:14px 20px 4px;font-size:11px;text-transform:uppercase;letter-spacing:1.5px;color:var(--text-muted);font-weight:600;white-space:nowrap;overflow:hidden;}
+.sidebar.collapsed .sb-section{display:none;}
+.nav-item{padding:10px 20px;display:flex;align-items:center;gap:12px;cursor:pointer;color:var(--text-secondary);transition:all .2s;border-left:3px solid transparent;white-space:nowrap;overflow:hidden;font-size:14px;}
+.nav-item:hover{background:rgba(59,130,246,0.08);color:var(--text-primary);}
+.nav-item.active{background:rgba(59,130,246,0.12);border-left-color:var(--accent-blue);color:var(--accent-blue-light);}
+.nav-item i{width:18px;text-align:center;font-size:15px;flex-shrink:0;}
+.nav-item span{overflow:hidden;}
+.sidebar.collapsed .nav-item span{display:none;}
+/* MAIN */
+.main-wrap{flex:1;display:flex;flex-direction:column;overflow:auto;min-width:0;}
+.header{height:64px;background:var(--bg-secondary);display:flex;align-items:center;justify-content:space-between;padding:0 24px;border-bottom:1px solid var(--border);flex-shrink:0;}
+.hdr-left{display:flex;align-items:center;gap:16px;}
+.toggle-btn{background:none;border:1px solid var(--border);color:var(--text-secondary);width:36px;height:36px;border-radius:6px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:14px;transition:.2s;}
+.toggle-btn:hover{background:var(--bg-card);color:var(--text-primary);}
+.hdr-title{font-size:17px;font-weight:700;color:var(--text-primary);}
+.hdr-breadcrumb{font-size:13px;color:var(--text-muted);}
+.hdr-right{display:flex;align-items:center;gap:12px;}
+.pill{background:rgba(59,130,246,0.15);color:var(--accent-blue-light);padding:5px 12px;border-radius:20px;font-size:12px;font-weight:600;}
+.pill.green{background:rgba(16,185,129,0.15);color:var(--accent-emerald);}
+.hdr-date{font-size:13px;color:var(--text-muted);}
+/* CONTENT */
+.content{flex:1;overflow-y:auto;overflow-x:auto;padding:24px;background:var(--bg-primary);}
+.tab-pane{display:none;}
+.tab-pane.active{display:block;animation:fadeUp .3s ease;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+/* FILTERS */
+.filters{background:var(--bg-card);border:1px solid var(--border);border-radius:10px;padding:16px 20px;margin-bottom:20px;display:flex;flex-wrap:wrap;gap:14px;align-items:flex-end;}
+.fg{display:flex;flex-direction:column;gap:6px;}
+.fg label{font-size:12px;color:var(--text-muted);font-weight:500;text-transform:uppercase;letter-spacing:.5px;}
+.fg select,.fg input{background:var(--bg-primary);border:1px solid var(--border);color:var(--text-primary);padding:8px 12px;border-radius:6px;font-family:inherit;font-size:13px;min-width:140px;}
+.fg select:focus,.fg input:focus{outline:none;border-color:var(--accent-blue);}
+.btn{padding:8px 16px;border-radius:6px;font-family:inherit;font-size:13px;font-weight:600;cursor:pointer;border:none;transition:.2s;}
+.btn-primary{background:var(--accent-blue);color:#fff;}
+.btn-primary:hover{background:#2563EB;}
+.btn-ghost{background:var(--bg-card);color:var(--text-secondary);border:1px solid var(--border);}
+.btn-ghost:hover{color:var(--text-primary);background:var(--bg-card-hover);}
+.btn-success{background:var(--accent-emerald);color:#fff;}
+.btn-success:hover{background:#059669;}
+/* KPI CARDS */
+.kpi-grid{display:grid;gap:18px;margin-bottom:20px;}
+.kpi-grid-4{grid-template-columns:repeat(4,1fr);}
+.kpi-grid-6{grid-template-columns:repeat(6,1fr);}
+.kpi-grid-5{grid-template-columns:repeat(5,1fr);}
+.kpi-card{background:var(--bg-card);border:1px solid var(--border);border-radius:10px;padding:20px;position:relative;overflow:hidden;transition:.2s;}
+.kpi-card::after{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--card-accent,var(--accent-blue));}
+.kpi-card:hover{border-color:rgba(59,130,246,0.25);transform:translateY(-1px);}
+.kpi-icon{position:absolute;top:20px;right:20px;width:42px;height:42px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;}
+.kpi-label{font-size:13px;color:var(--text-secondary);font-weight:500;margin-bottom:8px;padding-right:52px;}
+.kpi-value{font-size:30px;font-weight:800;color:var(--text-primary);margin-bottom:8px;line-height:1;}
+.kpi-sub{font-size:12px;color:var(--text-muted);display:flex;align-items:center;gap:5px;}
+.up{color:var(--accent-emerald);}.down{color:var(--accent-rose);}
+/* CHARTS */
+.charts-grid{display:grid;gap:18px;margin-bottom:20px;}
+.cg-2{grid-template-columns:1fr 1fr;}
+.cg-3{grid-template-columns:1fr 1fr 1fr;}
+.cg-1{grid-template-columns:1fr;}
+.chart-card{background:var(--bg-card);border:1px solid var(--border);border-radius:10px;padding:20px;}
+.chart-title{font-size:15px;font-weight:700;color:var(--text-primary);margin-bottom:16px;}
+.chart-subtitle{font-size:12px;color:var(--text-muted);margin-top:-12px;margin-bottom:16px;}
+.chart-wrap{position:relative;}
+.chart-wrap canvas{max-width:100%;}
+/* TABLES */
+.table-card{background:var(--bg-card);border:1px solid var(--border);border-radius:10px;overflow:hidden;margin-bottom:20px;}
+.table-toolbar{padding:14px 18px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border);}
+.table-toolbar-title{font-size:15px;font-weight:700;}
+.search-input{background:var(--bg-primary);border:1px solid var(--border);color:var(--text-primary);padding:7px 12px;border-radius:6px;font-family:inherit;font-size:13px;width:220px;}
+.search-input:focus{outline:none;border-color:var(--accent-blue);}
+.tbl-wrap{overflow-x:auto;max-height:520px;overflow-y:auto;}
+table{width:100%;border-collapse:collapse;}
+th{background:var(--bg-primary);color:var(--text-muted);font-weight:600;font-size:12px;text-transform:uppercase;letter-spacing:.5px;padding:12px 16px;text-align:left;position:sticky;top:0;z-index:2;white-space:nowrap;cursor:pointer;}
+th:hover{color:var(--text-primary);}
+td{padding:12px 16px;border-bottom:1px solid rgba(255,255,255,0.04);font-size:14px;white-space:nowrap;}
+tr:hover td{background:rgba(255,255,255,0.025);}
+.pagination{display:flex;align-items:center;justify-content:space-between;padding:12px 18px;border-top:1px solid var(--border);}
+.page-info{font-size:13px;color:var(--text-muted);}
+.page-btns{display:flex;gap:6px;}
+.pg-btn{background:var(--bg-primary);border:1px solid var(--border);color:var(--text-secondary);padding:5px 10px;border-radius:5px;cursor:pointer;font-family:inherit;font-size:13px;}
+.pg-btn:hover,.pg-btn.active{background:var(--accent-blue);color:#fff;border-color:var(--accent-blue);}
+/* BADGES */
+.badge{display:inline-block;padding:3px 10px;border-radius:20px;font-size:12px;font-weight:600;}
+.badge-over{background:rgba(16,185,129,0.15);color:var(--accent-emerald);}
+.badge-mod{background:rgba(59,130,246,0.15);color:var(--accent-blue-light);}
+.badge-under{background:rgba(245,158,11,0.15);color:var(--accent-amber);}
+.badge-not{background:rgba(244,63,94,0.15);color:var(--accent-rose);}
+.badge-low{background:rgba(16,185,129,0.15);color:var(--accent-emerald);}
+.badge-med{background:rgba(245,158,11,0.15);color:var(--accent-amber);}
+.badge-high{background:rgba(244,63,94,0.15);color:var(--accent-rose);}
+.badge-comp{background:rgba(16,185,129,0.15);color:var(--accent-emerald);}
+.badge-noncomp{background:rgba(244,63,94,0.15);color:var(--accent-rose);}
+.badge-na{background:rgba(100,116,139,0.15);color:var(--text-muted);}
+.tat-ok{color:var(--accent-emerald);font-weight:600;}
+.tat-warn{color:var(--accent-amber);font-weight:600;}
+.tat-bad{color:var(--accent-rose);font-weight:600;}
+/* HOME */
+.home-hero{background:linear-gradient(135deg,rgba(59,130,246,0.15),rgba(139,92,246,0.1));border:1px solid var(--border);border-radius:12px;padding:32px;margin-bottom:28px;text-align:center;}
+.home-hero h1{font-size:28px;font-weight:800;margin-bottom:8px;background:linear-gradient(135deg,#60A5FA,#A78BFA);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.home-hero p{color:var(--text-secondary);font-size:15px;}
+.home-section-title{font-size:16px;font-weight:700;color:var(--accent-blue-light);margin:24px 0 14px;padding-bottom:8px;border-bottom:1px solid var(--border);}
+.home-cards{display:grid;grid-template-columns:repeat(5,1fr);gap:16px;margin-bottom:10px;}
+.home-card{background:var(--bg-card);border:1px solid var(--border);border-radius:10px;padding:20px;cursor:pointer;transition:all .25s;text-align:center;}
+.home-card:hover{border-color:var(--accent-blue);transform:translateY(-3px);box-shadow:0 8px 24px rgba(0,0,0,0.25);}
+.home-card i{font-size:28px;margin-bottom:12px;display:block;}
+.home-card-title{font-size:14px;font-weight:600;color:var(--text-primary);margin-bottom:6px;}
+.home-card-desc{font-size:12px;color:var(--text-muted);}
+/* GLOSSARY */
+.glossary-table{width:100%;border-collapse:collapse;}
+.glossary-table th{background:var(--bg-primary);color:var(--text-muted);font-size:12px;text-transform:uppercase;letter-spacing:.5px;padding:12px 18px;text-align:left;border-bottom:1px solid var(--border);}
+.glossary-table td{padding:14px 18px;border-bottom:1px solid rgba(255,255,255,0.04);font-size:14px;vertical-align:top;}
+.glossary-table tr:hover td{background:rgba(255,255,255,0.02);}
+.g-term{font-weight:700;color:var(--accent-blue-light);white-space:nowrap;}
+.g-def{color:var(--text-primary);}
+.g-formula{font-family:monospace;background:var(--bg-primary);padding:3px 8px;border-radius:4px;font-size:13px;color:var(--accent-cyan);}
+/* TIMESHEET */
+.ts-info{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:20px;}
+.ts-info-card{background:var(--bg-card);border:1px solid var(--border);border-radius:8px;padding:16px;text-align:center;}
+.ts-info-label{font-size:12px;color:var(--text-muted);margin-bottom:6px;}
+.ts-info-val{font-size:18px;font-weight:700;color:var(--accent-blue-light);}
+/* MATRIX TABLE */
+.matrix-manager{font-weight:700;color:var(--accent-amber);background:rgba(245,158,11,0.08);}
+.cell-good{color:var(--accent-emerald);}
+.cell-warn{color:var(--accent-amber);}
+.cell-bad{color:var(--accent-rose);}
+/* SCROLLBAR */
+::-webkit-scrollbar{width:12px;height:12px;}
+::-webkit-scrollbar-track{background:rgba(10,15,30,0.8);border-left:1px solid rgba(59,130,246,0.1);}
+::-webkit-scrollbar-thumb{background:rgba(59,130,246,0.55);border-radius:6px;border:2px solid rgba(10,15,30,0.8);}
+::-webkit-scrollbar-thumb:hover{background:rgba(96,165,250,0.85);}
+* { scrollbar-width: thin; scrollbar-color: rgba(59,130,246,0.55) rgba(10,15,30,0.8); }
+</style>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<nav class="sidebar" id="sidebar">
+  <div class="sb-logo">
+    <div class="sb-logo-icon"><i class="fas fa-chart-network"></i></div>
+    <div class="sb-logo-text">Intelligence Team</div>
+  </div>
+  <div class="sb-section">Analytics</div>
+  <div class="nav-item active" data-tab="1" onclick="showTab(1)"><i class="fas fa-home"></i><span>Home</span></div>
+  <div class="nav-item" data-tab="2" onclick="showTab(2)"><i class="fas fa-book-open"></i><span>Glossary</span></div>
+  <div class="nav-item" data-tab="3" onclick="showTab(3)"><i class="fas fa-clock"></i><span>Time Sheet</span></div>
+  <div class="nav-item" data-tab="4" onclick="showTab(4)"><i class="fas fa-ticket-alt"></i><span>Tickets Overview</span></div>
+  <div class="nav-item" data-tab="5" onclick="showTab(5)"><i class="fas fa-chart-pie"></i><span>Utilization Overview</span></div>
+  <div class="nav-item" data-tab="6" onclick="showTab(6)"><i class="fas fa-shield-alt"></i><span>Branding Team Utilization</span></div>
+  <div class="nav-item" data-tab="7" onclick="showTab(7)"><i class="fas fa-bullseye"></i><span>Incentive X Utilization</span></div>
+  <div class="nav-item" data-tab="8" onclick="showTab(8)"><i class="fas fa-layer-group"></i><span>Ticket Complexity</span></div>
+  <div class="nav-item" data-tab="9" onclick="showTab(9)"><i class="fas fa-search"></i><span>Complexity Details</span></div>
+  <div class="nav-item" data-tab="10" onclick="showTab(10)"><i class="fas fa-stopwatch"></i><span>System TAT</span></div>
+  <div class="nav-item" data-tab="11" onclick="showTab(11)"><i class="fas fa-star"></i><span>QA Analysis</span></div>
+            </nav>
+
+<!-- MAIN -->
+<div class="main-wrap">
+  <div class="header">
+    <div class="hdr-left">
+      <button class="toggle-btn" onclick="toggleSidebar()"><i class="fas fa-bars"></i></button>
+      <div class="hdr-title">Intelligence Team Tracker</div>
+      <div class="hdr-breadcrumb" id="breadcrumb">/ Home</div>
+    </div>
+    <div class="hdr-right">
+      <div class="hdr-date" id="hdrDate"></div>
+      <div class="pill">Current Sprint: S128</div>
+      <div class="pill green">FY2026</div>
+    </div>
+  </div>
+
+  <div class="content" id="contentArea">
+
+    <!-- TAB 1: HOME -->
+    <div class="tab-pane active" id="tab-1">
+      <div class="home-hero">
+        <h1>Intelligence Team Tracker</h1>
+        
+      </div>
+      <div class="home-section-title"><i class="fas fa-chart-line" style="color:var(--accent-blue);margin-right:8px;"></i>Analytics Suite</div>
+      <div class="home-cards">
+        <div class="home-card" onclick="showTab(2)"><i class="fas fa-book-open" style="color:var(--accent-blue);"></i><div class="home-card-title">Glossary</div><div class="home-card-desc">Metric definitions &amp; KPI documentation</div></div>
+        <div class="home-card" onclick="showTab(3)"><i class="fas fa-clock" style="color:var(--accent-purple);"></i><div class="home-card-title">Time Sheet</div><div class="home-card-desc">Sprint time benchmarks per cohort</div></div>
+        <div class="home-card" onclick="showTab(4)"><i class="fas fa-ticket-alt" style="color:var(--accent-blue);"></i><div class="home-card-title">Tickets Overview</div><div class="home-card-desc">Ticket volume by sprint, cohort &amp; researcher</div></div>
+        <div class="home-card" onclick="showTab(5)"><i class="fas fa-chart-pie" style="color:var(--accent-emerald);"></i><div class="home-card-title">Utilization Overview</div><div class="home-card-desc">Sprint capacity vs actual minutes worked</div></div>
+        <div class="home-card" onclick="showTab(6)"><i class="fas fa-shield-alt" style="color:var(--accent-cyan);"></i><div class="home-card-title">Branding Team Utilization</div><div class="home-card-desc">Branding Team workload tracking</div></div>
+        <div class="home-card" onclick="showTab(7)"><i class="fas fa-bullseye" style="color:var(--accent-amber);"></i><div class="home-card-title">Incentive X Utilization</div><div class="home-card-desc">Quarterly Incentive Plan tracker</div></div>
+        <div class="home-card" onclick="showTab(8)"><i class="fas fa-layer-group" style="color:var(--accent-rose);"></i><div class="home-card-title">Ticket Complexity</div><div class="home-card-desc">Low / Medium / High ticket classification</div></div>
+        <div class="home-card" onclick="showTab(9)"><i class="fas fa-search" style="color:var(--accent-blue-light);"></i><div class="home-card-title">Complexity Details</div><div class="home-card-desc">Granular ticket-level complexity drilldown</div></div>
+        <div class="home-card" onclick="showTab(10)"><i class="fas fa-stopwatch" style="color:var(--accent-orange);"></i><div class="home-card-title">System TAT</div><div class="home-card-desc">IntelliTrack system-generated turnaround analysis</div></div>
+        <div class="home-card" onclick="showTab(11)"><i class="fas fa-star" style="color:var(--accent-amber);"></i><div class="home-card-title">QA Analysis</div><div class="home-card-desc">Quality audit scores &amp; coverage</div></div>
+      </div>
+            </div>
+    </div>
+
+    <!-- TAB 2: Intelligence GLOSSARY -->
+    <div class="tab-pane" id="tab-2">
+      <div class="table-card">
+        <div class="table-toolbar"><div class="table-toolbar-title"><i class="fas fa-book-open" style="color:var(--accent-blue);margin-right:8px;"></i>Intelligence Metric Definitions &amp; Glossary</div></div>
+        <table class="glossary-table">
+          <thead><tr><th style="width:240px;">Term</th><th>Definition</th><th>Formula / Logic</th></tr></thead>
+          <tbody>
+            <tr><td class="g-term">Full Scope Research Ticket</td><td class="g-def">A completed account research ticket with priority Critical, Major, or Normal. Covers Account Research and IntelliTrack Account Research record types.</td><td><span class="g-formula">Record Type IN {AR, IntelliTrack AR} AND Priority IN {Critical,Major,Normal} AND Status = Completed</span></td></tr>
+            <tr><td class="g-term">Trivial Ticket</td><td class="g-def">A completed research ticket with Trivial priority — lower effort and weighted less in velocity calculations.</td><td><span class="g-formula">Priority = Trivial AND Status = Completed</span></td></tr>
+            <tr><td class="g-term">Vetting</td><td class="g-def">Enforcement-type ticket where the task is Vetting. Counted separately as it represents a different workflow.</td><td><span class="g-formula">Record Type IN {Enforcement, IntelliTrack Enforcement} AND Task = Vetting AND Status = Completed</span></td></tr>
+            <tr><td class="g-term">Normalized Velocity</td><td class="g-def">Weighted ticket score that normalises the mix of Enterprise  and Mid-Market  tickets to create a comparable cross-team performance metric.</td><td><span class="g-formula">If Base=High: (Low/2)+High+(Trivials/6)+(Surplus/4) | If Base=Low: Low+(High&times;2)+(Trivials/3)+(Surplus/2)</span></td></tr>
+            <tr><td class="g-term">Utilization %</td><td class="g-def">Percentage of remaining available capacity actually used by a researcher after commitment is deducted.</td><td><span class="g-formula">Total Utilization Minutes ÷ Remaining After Commitment Minutes</span></td></tr>
+            <tr><td class="g-term">Capacity Utilization %</td><td class="g-def">Ratio of tickets actually completed vs the expected ticket count based on historical average ticket size.</td><td><span class="g-formula">Actual Tickets ÷ Expected Tickets (= Remaining Minutes ÷ Benchmark Min/Ticket)</span></td></tr>
+            <tr><td class="g-term">Available Sprint Minutes</td><td class="g-def">Total productive minutes a researcher has in a sprint, accounting for meeting overhead (10% deduction).</td><td><span class="g-formula">Working Days × 480 min/day × 0.90 efficiency</span></td></tr>
+            <tr><td class="g-term">Research Utilization</td><td class="g-def">Total effort minutes logged against full-scope research tickets in the Research Metrics fact table.</td><td><span class="g-formula">SUM(Research Metrics[Total_Efforts])</span></td></tr>
+            <tr><td class="g-term">Enforcement Efforts</td><td class="g-def">Minutes logged on enforcement-type tickets. Pulled directly from the Ticket Data enforcement time column.</td><td><span class="g-formula">SUM(Ticket Data[Enforcement Time])</span></td></tr>
+            <tr><td class="g-term">Trivial Efforts</td><td class="g-def">Estimated effort for trivial tickets using a fixed 120-minute benchmark per ticket.</td><td><span class="g-formula">Total Trivial Tickets × 120 min</span></td></tr>
+            <tr><td class="g-term">Commitment %</td><td class="g-def">Proportion of available sprint minutes pre-committed (QA, training, admin) — capped at 100%. Prorated to date selection.</td><td><span class="g-formula">Committed Minutes (Prorated) ÷ Available Sprint Minutes, min(result, 1)</span></td></tr>
+            <tr><td class="g-term">Sprint</td><td class="g-def">14-day work cycle. The dashboard covers Sprints 111–163 (FY2025–2026). Each sprint aligns to a 2-week delivery cadence.</td><td><span class="g-formula">Sprint 111 = Jan 1 2025 ... Sprint 163 = Dec 31 2026</span></td></tr>
+            <tr><td class="g-term">Cohort</td><td class="g-def">Team grouping for Intelligence researchers. Cohorts Branding Team, TeamPro, BrandCo, and Other are excluded from Intelligence metrics.</td><td><span class="g-formula">Active cohorts: Cohort A, Cohort B, Cohort C, Cohort D</span></td></tr>
+            <tr><td class="g-term">Benchmark Min/Ticket</td><td class="g-def">Historical average effort in minutes per ticket, calculated per cohort type. Used to calculate expected ticket counts.</td><td><span class="g-formula">DIVIDE(Remaining After Commitment, Expected Tickets Revamp)</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- TAB 3: TIME SHEET -->
+    <div class="tab-pane" id="tab-3">
+      <div class="ts-info">
+        <div class="ts-info-card"><div class="ts-info-label">Sprint Duration</div><div class="ts-info-val">14 Working Days</div></div>
+        <div class="ts-info-card"><div class="ts-info-label">Daily Productive Minutes</div><div class="ts-info-val">480 × 0.90 = 432 min</div></div>
+        <div class="ts-info-card"><div class="ts-info-label">Sprint Productive Minutes</div><div class="ts-info-val">~6,048 min / researcher</div></div>
+      </div>
+      <div class="table-card">
+        <div class="table-toolbar"><div class="table-toolbar-title"><i class="fas fa-clock" style="color:var(--accent-blue);margin-right:8px;"></i>Cohort Time Benchmarks — Minutes Per Ticket Component</div></div>
+        <div class="tbl-wrap">
+          <table>
+            <thead><tr><th>Cohort Type</th><th>Entity Outside (min)</th><th>Entity Inside (min)</th><th>Domain Outside (min)</th><th>Domain Inside (min)</th><th>Apps Outside (min)</th><th>Apps Inside (min)</th><th>Add-on / Remarks (min)</th><th>Capping (min)</th></tr></thead>
+            <tbody>
+              <tr><td><strong>Enterprise </strong></td><td>45</td><td>30</td><td>20</td><td>15</td><td>25</td><td>18</td><td>60</td><td style="color:var(--accent-emerald);font-weight:700;">480</td></tr>
+              <tr><td><strong>Mid-Market </strong></td><td>35</td><td>25</td><td>15</td><td>12</td><td>20</td><td>14</td><td>45</td><td style="color:var(--accent-blue-light);font-weight:700;">360</td></tr>
+              <tr><td><strong>Mixed</strong></td><td>40</td><td>28</td><td>18</td><td>13</td><td>22</td><td>16</td><td>52</td><td style="color:var(--accent-purple);font-weight:700;">420</td></tr>
+              <tr><td><strong>New / Onboarding</strong></td><td>30</td><td>22</td><td>12</td><td>10</td><td>18</td><td>12</td><td>38</td><td style="color:var(--accent-amber);font-weight:700;">300</td></tr>
+              <tr><td><strong>Cohort A</strong></td><td>42</td><td>29</td><td>19</td><td>14</td><td>24</td><td>17</td><td>58</td><td style="color:var(--accent-emerald);font-weight:700;">460</td></tr>
+              <tr><td><strong>Cohort B</strong></td><td>33</td><td>24</td><td>14</td><td>11</td><td>19</td><td>13</td><td>42</td><td style="color:var(--accent-blue-light);font-weight:700;">340</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="chart-card" style="margin-top:18px;">
+        <div class="chart-title">Entity, Domain &amp; Apps — Outside Time Comparison by Cohort</div>
+        <div class="chart-wrap"><canvas id="c3-1" height="220"></canvas></div>
+      </div>
+    </div>
+
+    <!-- TAB 4: TICKETS OVERVIEW -->
+    <div class="tab-pane" id="tab-4">
+      <div class="filters" id="filters-4">
+        <div class="fg"><label>Date From</label><input type="date" id="f4-from" value="2025-01-01"></div>
+        <div class="fg"><label>Date To</label><input type="date" id="f4-to" value="2026-09-27"></div>
+        <div class="fg"><label>Sprint</label><select id="f4-sprint"><option value="all">All Sprints</option></select></div>
+        <div class="fg"><label>Cohort</label><select id="f4-cohort"><option value="all">All Cohorts</option><option>Cohort A</option><option>Cohort B</option><option>Cohort C</option><option>Cohort D</option></select></div>
+        <div class="fg"><label>Manager</label><select id="f4-manager"><option value="all">All Managers</option><option>Manager Alpha</option><option>Manager Beta</option><option>Manager Gamma</option></select></div>
+        <div class="fg"><label>Researcher</label><select id="f4-researcher"><option value="all">All Researchers</option></select></div>
+        <button class="btn btn-primary" style="align-self:flex-end;" onclick="applyFilter4()">Apply</button>
+        <button class="btn btn-ghost" style="align-self:flex-end;" onclick="resetFilter4()">Clear</button>
+      </div>
+      <div class="kpi-grid kpi-grid-4">
+        <div class="kpi-card" style="--card-accent:var(--accent-blue);">
+          <div class="kpi-icon" style="background:rgba(59,130,246,0.12);color:var(--accent-blue);"><i class="fas fa-clipboard-list"></i></div>
+          <div class="kpi-label">Full Scope Research Tickets</div>
+          <div class="kpi-value" id="kpi-4-1">1,124</div>
+          <div class="kpi-sub"><span class="up"><i class="fas fa-arrow-up"></i> 8.3%</span> vs prev sprint</div>
+        </div>
+        <div class="kpi-card" style="--card-accent:var(--accent-purple);">
+          <div class="kpi-icon" style="background:rgba(139,92,246,0.12);color:var(--accent-purple);"><i class="fas fa-minus-circle"></i></div>
+          <div class="kpi-label">Total Trivial Tickets</div>
+          <div class="kpi-value" id="kpi-4-2">389</div>
+          <div class="kpi-sub"><span class="up"><i class="fas fa-arrow-up"></i> 4.1%</span> vs prev sprint</div>
+        </div>
+        <div class="kpi-card" style="--card-accent:var(--accent-orange);">
+          <div class="kpi-icon" style="background:rgba(249,115,22,0.12);color:var(--accent-orange);"><i class="fas fa-shield-alt"></i></div>
+          <div class="kpi-label">Vetting Tickets</div>
+          <div class="kpi-value" id="kpi-4-3">203</div>
+          <div class="kpi-sub"><span class="up"><i class="fas fa-arrow-up"></i> 12.7%</span> vs prev sprint</div>
+        </div>
+        <div class="kpi-card" style="--card-accent:var(--accent-emerald);">
+          <div class="kpi-icon" style="background:rgba(16,185,129,0.12);color:var(--accent-emerald);"><i class="fas fa-bolt"></i></div>
+          <div class="kpi-label">Normalized Velocity</div>
+          <div class="kpi-value" id="kpi-4-4">2,847</div>
+          <div class="kpi-sub"><span class="up"><i class="fas fa-arrow-up"></i> 6.2%</span> vs prev sprint</div>
+        </div>
+      </div>
+      <div class="charts-grid cg-2">
+        <div class="chart-card"><div class="chart-title">Sprint | Ticket Completion</div><div class="chart-wrap"><canvas id="c4-1" height="320"></canvas></div></div>
+        <div class="chart-card"><div class="chart-title">Cohort | Ticket Completion</div><div class="chart-wrap"><canvas id="c4-2" height="320"></canvas></div></div>
+      </div>
+      <div class="charts-grid cg-2">
+        <div class="chart-card"><div class="chart-title">Top 15 Researchers | Ticket Completion</div><div class="chart-wrap"><canvas id="c4-3" height="380"></canvas></div></div>
+        <div class="chart-card"><div class="chart-title">Monthly Ticket Frequency Trend</div><div class="chart-wrap"><canvas id="c4-4" height="380"></canvas></div></div>
+      </div>
+    </div>
+
+    <!-- TAB 5: UTILIZATION OVERVIEW -->
+    <div class="tab-pane" id="tab-5">
+      <div class="filters">
+        <div class="fg"><label>Sprint</label><select><option>All Sprints</option><option>S128</option><option>S127</option></select></div>
+        <div class="fg"><label>Cohort</label><select><option>All Cohorts</option><option>Cohort A</option><option>Cohort B</option></select></div>
+        <div class="fg"><label>Manager</label><select><option>All Managers</option><option>Manager Alpha</option><option>Manager Beta</option></select></div>
+        <div class="fg"><label>Researcher</label><select><option>All Researchers</option></select></div>
+        <button class="btn btn-primary" style="align-self:flex-end;">Apply</button>
+      </div>
+      <div class="kpi-grid kpi-grid-4">
+        <div class="kpi-card" style="--card-accent:var(--accent-emerald);">
+          <div class="kpi-icon" style="background:rgba(16,185,129,0.12);color:var(--accent-emerald);"><i class="fas fa-chart-pie"></i></div>
+          <div class="kpi-label">Team Capacity Utilization %</div>
+          <div class="kpi-value">87%</div>
+          <div class="kpi-sub"><span class="up"><i class="fas fa-arrow-up"></i> 3.2%</span> vs last sprint</div>
+        </div>
+        <div class="kpi-card" style="--card-accent:var(--accent-blue);">
+          <div class="kpi-icon" style="background:rgba(59,130,246,0.12);color:var(--accent-blue);"><i class="fas fa-users"></i></div>
+          <div class="kpi-label">Utilized Researchers</div>
+          <div class="kpi-value">18</div>
+          <div class="kpi-sub"><span class="up"><i class="fas fa-arrow-up"></i> 2 researchers</span> vs prev</div>
+        </div>
+        <div class="kpi-card" style="--card-accent:var(--accent-amber);">
+          <div class="kpi-icon" style="background:rgba(245,158,11,0.12);color:var(--accent-amber);"><i class="fas fa-user-minus"></i></div>
+          <div class="kpi-label">Under Utilized Researchers</div>
+          <div class="kpi-value">6</div>
+          <div class="kpi-sub"><span class="down"><i class="fas fa-arrow-down"></i> 1</span> vs prev sprint</div>
+        </div>
+        <div class="kpi-card" style="--card-accent:var(--accent-purple);">
+          <div class="kpi-icon" style="background:rgba(139,92,246,0.12);color:var(--accent-purple);"><i class="fas fa-star"></i></div>
+          <div class="kpi-label">Average Quality Score</div>
+          <div class="kpi-value">92%</div>
+          <div class="kpi-sub"><span class="up"><i class="fas fa-arrow-up"></i> 1.1%</span> vs prev sprint</div>
+        </div>
+      </div>
+      <div class="charts-grid cg-2">
+        <div class="chart-card"><div class="chart-title">Researcher | Capacity Utilization %</div><div class="chart-subtitle">Color-coded: green ≥100%, blue ≥80%, amber ≥50%, red &lt;50%</div><div class="chart-wrap"><canvas id="c5-1" height="380"></canvas></div></div>
+        <div class="chart-card"><div class="chart-title">Monthly Capacity Utilization %</div><div class="chart-wrap"><canvas id="c5-2" height="380"></canvas></div></div>
+      </div>
+      <div class="charts-grid cg-2">
+        <div class="chart-card"><div class="chart-title">Utilization Category Distribution</div><div class="chart-wrap"><canvas id="c5-3" height="300"></canvas></div></div>
+        <div class="chart-card"><div class="chart-title">Sprint Utilization Trend</div><div class="chart-wrap"><canvas id="c5-4" height="300"></canvas></div></div>
+      </div>
+    </div>
+
+    <!-- TAB 6: Branding Team UTILIZATION -->
+    <div class="tab-pane" id="tab-6">
+      <div class="filters">
+        <div class="fg"><label>Date From</label><input type="date" value="2025-01-01"></div>
+        <div class="fg"><label>Date To</label><input type="date" value="2026-09-27"></div>
+        <div class="fg"><label>Researcher</label><select><option>All Branding Team Researchers</option><option>Aditi C.</option><option>Priya M.</option><option>Sneha R.</option><option>Divya T.</option><option>Kavitha B.</option></select></div>
+        <button class="btn btn-primary" style="align-self:flex-end;">Apply</button>
+      </div>
+      <div class="kpi-grid kpi-grid-6">
+        <div class="kpi-card" style="--card-accent:var(--accent-blue);">
+          <div class="kpi-icon" style="background:rgba(59,130,246,0.12);color:var(--accent-blue);"><i class="fas fa-microscope"></i></div>
+          <div class="kpi-label">Total Research Time (min)</div>
+          <div class="kpi-value" style="font-size:22px;">48,320</div>
+          <div class="kpi-sub"><span class="up"><i class="fas fa-arrow-up"></i> 5.4%</span></div>
+        </div>
+        <div class="kpi-card" style="--card-accent:var(--accent-purple);">
+          <div class="kpi-icon" style="background:rgba(139,92,246,0.12);color:var(--accent-purple);"><i class="fas fa-file-alt"></i></div>
+          <div class="kpi-label">Total Report Making (min)</div>
+          <div class="kpi-value" style="font-size:22px;">31,240</div>
+          <div class="kpi-sub"><span class="up"><i class="fas fa-arrow-up"></i> 3.1%</span></div>
+        </div>
+        <div class="kpi-card" style="--card-accent:var(--accent-emerald);">
+          <div class="kpi-icon" style="background:rgba(16,185,129,0.12);color:var(--accent-emerald);"><i class="fas fa-search"></i></div>
+          <div class="kpi-label">Research Review Count</div>
+          <div class="kpi-value" style="font-size:22px;">187</div>
+          <div class="kpi-sub"><span class="up"><i class="fas fa-arrow-up"></i> 8.2%</span></div>
+        </div>
+        <div class="kpi-card" style="--card-accent:var(--accent-amber);">
+          <div class="kpi-icon" style="background:rgba(245,158,11,0.12);color:var(--accent-amber);"><i class="fas fa-check-circle"></i></div>
+          <div class="kpi-label">L1 Review Count</div>
+          <div class="kpi-value" style="font-size:22px;">143</div>
+          <div class="kpi-sub"><span class="up"><i class="fas fa-arrow-up"></i> 4.3%</span></div>
+        </div>
+        <div class="kpi-card" style="--card-accent:var(--accent-orange);">
+          <div class="kpi-icon" style="background:rgba(249,115,22,0.12);color:var(--accent-orange);"><i class="fas fa-check-double"></i></div>
+          <div class="kpi-label">L2 Review Count</div>
+          <div class="kpi-value" style="font-size:22px;">98</div>
+          <div class="kpi-sub"><span class="up"><i class="fas fa-arrow-up"></i> 2.8%</span></div>
+        </div>
+        <div class="kpi-card" style="--card-accent:var(--accent-cyan);">
+          <div class="kpi-icon" style="background:rgba(6,182,212,0.12);color:var(--accent-cyan);"><i class="fas fa-clipboard-check"></i></div>
+          <div class="kpi-label">DSR Count</div>
+          <div class="kpi-value" style="font-size:22px;">67</div>
+          <div class="kpi-sub"><span class="up"><i class="fas fa-arrow-up"></i> 7.1%</span></div>
+        </div>
+      </div>
+      <div class="charts-grid cg-2">
+        <div class="chart-card"><div class="chart-title">Researcher | Research &amp; Report Creation Stats</div><div class="chart-wrap"><canvas id="c6-1" height="300"></canvas></div></div>
+        <div class="chart-card"><div class="chart-title">Monthly Branding Team Activity Trend</div><div class="chart-wrap"><canvas id="c6-2" height="300"></canvas></div></div>
+      </div>
+      <div class="charts-grid cg-2">
+        <div class="chart-card"><div class="chart-title">Branding Team Researcher | Capacity Utilization %</div><div class="chart-wrap"><canvas id="c6-3" height="280"></canvas></div></div>
+        <div class="chart-card"><div class="chart-title">Time Breakdown Distribution</div><div class="chart-wrap"><canvas id="c6-4" height="280"></canvas></div></div>
+      </div>
+    </div>
+
+    <!-- TAB 7: Incentive X UTILIZATION -->
+    <div class="tab-pane" id="tab-7">
+      <div class="filters">
+        <div class="fg"><label>Quarter</label><select id="f7-qtr"><option>All Quarters</option><option>Q1 2025</option><option>Q2 2025</option><option>Q3 2025</option><option>Q4 2025</option><option>Q1 2026</option><option>Q2 2026</option></select></div>
+        <div class="fg"><label>Sprint</label><select><option>All Sprints</option></select></div>
+        <div class="fg"><label>Cohort</label><select><option>All Cohorts</option><option>Cohort A</option><option>Cohort B</option></select></div>
+        <div class="fg"><label>Manager</label><select><option>All Managers</option><option>Manager Alpha</option><option>Manager Beta</option></select></div>
+        <button class="btn btn-primary" style="align-self:flex-end;">Apply</button>
+      </div>
+      <div class="kpi-grid kpi-grid-5">
+        <div class="kpi-card" style="--card-accent:var(--accent-blue);">
+          <div class="kpi-icon" style="background:rgba(59,130,246,0.12);color:var(--accent-blue);"><i class="fas fa-crosshairs"></i></div>
+          <div class="kpi-label">Target Given (Q)</div><div class="kpi-value">95</div>
+          <div class="kpi-sub">Quarterly ticket target</div>
+        </div>
+        <div class="kpi-card" style="--card-accent:var(--accent-emerald);">
+          <div class="kpi-icon" style="background:rgba(16,185,129,0.12);color:var(--accent-emerald);"><i class="fas fa-trophy"></i></div>
+          <div class="kpi-label">Completed vs Target</div><div class="kpi-value" style="font-size:22px;">87 / 95</div>
+          <div class="kpi-sub"><span class="up">91.6%</span> achievement</div>
+        </div>
+        <div class="kpi-card" style="--card-accent:var(--accent-amber);">
+          <div class="kpi-icon" style="background:rgba(245,158,11,0.12);color:var(--accent-amber);"><i class="fas fa-percentage"></i></div>
+          <div class="kpi-label">Projection %</div><div class="kpi-value">91.6%</div>
+          <div class="kpi-sub">Run-rate forecast</div>
+        </div>
+        <div class="kpi-card" style="--card-accent:var(--accent-purple);">
+          <div class="kpi-icon" style="background:rgba(139,92,246,0.12);color:var(--accent-purple);"><i class="fas fa-calendar-day"></i></div>
+          <div class="kpi-label">Days Elapsed</div><div class="kpi-value">18 / 22</div>
+          <div class="kpi-sub">4 days remaining in sprint</div>
+        </div>
+        <div class="kpi-card" style="--card-accent:var(--accent-cyan);">
+          <div class="kpi-icon" style="background:rgba(6,182,212,0.12);color:var(--accent-cyan);"><i class="fas fa-calendar-alt"></i></div>
+          <div class="kpi-label">Working Days Remaining</div><div class="kpi-value">4</div>
+          <div class="kpi-sub">Of current sprint</div>
+        </div>
+      </div>
+      <div class="table-card">
+        <div class="table-toolbar"><div class="table-toolbar-title">Incentive Performance Matrix — All Researchers</div></div>
+        <div class="tbl-wrap">
+          <table id="qip-table">
+            <thead><tr><th onclick="sortTable('qip-table',0)">Researcher ↕</th><th onclick="sortTable('qip-table',1)">Cohort ↕</th><th onclick="sortTable('qip-table',2)">Target ↕</th><th onclick="sortTable('qip-table',3)">Completed ↕</th><th onclick="sortTable('qip-table',4)">Cap Util % ↕</th><th onclick="sortTable('qip-table',5)">Projection % ↕</th><th>Incentive Category</th><th>Status</th></tr></thead>
+            <tbody id="qip-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+      <div class="chart-card" style="margin-top:18px;">
+        <div class="chart-title">Researcher | Projection % vs Target Achievement</div>
+        <div class="chart-wrap"><canvas id="c7-1" height="280"></canvas></div>
+      </div>
+    </div>
+
+    <!-- TAB 8: Ticket COMPLEXITY -->
+    <div class="tab-pane" id="tab-8">
+      <div class="filters">
+        <div class="fg"><label>Sprint</label><select><option>All Sprints</option></select></div>
+        <div class="fg"><label>Cohort</label><select><option>All Cohorts</option><option>Cohort A</option><option>Cohort B</option></select></div>
+        <div class="fg"><label>Complexity</label><select><option>All</option><option>Low Complex</option><option>Medium Complex</option><option>High Complex</option></select></div>
+        <div class="fg"><label>Researcher</label><select><option>All Researchers</option></select></div>
+        <button class="btn btn-primary" style="align-self:flex-end;">Apply</button>
+      </div>
+      <div class="kpi-grid kpi-grid-6">
+        <div class="kpi-card" style="--card-accent:var(--accent-emerald);">
+          <div class="kpi-icon" style="background:rgba(16,185,129,0.12);color:var(--accent-emerald);"><i class="fas fa-circle"></i></div>
+          <div class="kpi-label">Low Complex Count</div><div class="kpi-value" style="font-size:24px;">678</div>
+          <div class="kpi-sub"><span style="color:var(--accent-emerald);">60.2%</span> of total</div>
+        </div>
+        <div class="kpi-card" style="--card-accent:var(--accent-amber);">
+          <div class="kpi-icon" style="background:rgba(245,158,11,0.12);color:var(--accent-amber);"><i class="fas fa-circle"></i></div>
+          <div class="kpi-label">Medium Complex Count</div><div class="kpi-value" style="font-size:24px;">312</div>
+          <div class="kpi-sub"><span style="color:var(--accent-amber);">27.7%</span> of total</div>
+        </div>
+        <div class="kpi-card" style="--card-accent:var(--accent-rose);">
+          <div class="kpi-icon" style="background:rgba(244,63,94,0.12);color:var(--accent-rose);"><i class="fas fa-circle"></i></div>
+          <div class="kpi-label">High Complex Count</div><div class="kpi-value" style="font-size:24px;">134</div>
+          <div class="kpi-sub"><span style="color:var(--accent-rose);">11.9%</span> of total</div>
+        </div>
+        <div class="kpi-card" style="--card-accent:var(--accent-blue);">
+          <div class="kpi-icon" style="background:rgba(59,130,246,0.12);color:var(--accent-blue);"><i class="fas fa-globe"></i></div>
+          <div class="kpi-label">Avg Domain Count</div><div class="kpi-value" style="font-size:24px;">3.2</div>
+          <div class="kpi-sub">Excl. 0 &amp; blank</div>
+        </div>
+        <div class="kpi-card" style="--card-accent:var(--accent-purple);">
+          <div class="kpi-icon" style="background:rgba(139,92,246,0.12);color:var(--accent-purple);"><i class="fas fa-mobile-alt"></i></div>
+          <div class="kpi-label">Avg App Count</div><div class="kpi-value" style="font-size:24px;">5.7</div>
+          <div class="kpi-sub">Excl. 0 &amp; blank</div>
+        </div>
+        <div class="kpi-card" style="--card-accent:var(--accent-cyan);">
+          <div class="kpi-icon" style="background:rgba(6,182,212,0.12);color:var(--accent-cyan);"><i class="fas fa-building"></i></div>
+          <div class="kpi-label">Avg Entity Count</div><div class="kpi-value" style="font-size:24px;">4.1</div>
+          <div class="kpi-sub">Excl. 0 &amp; blank</div>
+        </div>
+      </div>
+      <div class="charts-grid cg-2">
+        <div class="chart-card"><div class="chart-title">Complexity by Ticket Type</div><div class="chart-wrap"><canvas id="c8-1" height="300"></canvas></div></div>
+        <div class="chart-card"><div class="chart-title">Avg. Ticket Hours by Complexity Tier</div><div class="chart-wrap"><canvas id="c8-2" height="300"></canvas></div></div>
+      </div>
+      <div class="charts-grid cg-2">
+        <div class="chart-card"><div class="chart-title">Overall Complexity Distribution</div><div class="chart-wrap"><canvas id="c8-3" height="280"></canvas></div></div>
+        <div class="chart-card"><div class="chart-title">Complexity Trend by Sprint</div><div class="chart-wrap"><canvas id="c8-4" height="280"></canvas></div></div>
+      </div>
+    </div>
+
+    <!-- TAB 9: Ticket COMPLEXITY DETAILS -->
+    <div class="tab-pane" id="tab-9">
+      <div class="table-card">
+        <div class="table-toolbar">
+          <div class="table-toolbar-title">Ticket Complexity Details</div>
+          <div style="display:flex;gap:10px;">
+            <select style="background:var(--bg-primary);border:1px solid var(--border);color:var(--text-primary);padding:7px 12px;border-radius:6px;font-family:inherit;font-size:13px;" id="f9-complexity" onchange="filterTab9()"><option value="all">All Complexities</option><option value="Low Complex">Low Complex</option><option value="Medium Complex">Medium Complex</option><option value="High Complex">High Complex</option></select>
+            <input class="search-input" id="search-9" placeholder="Search Ticket, researcher..." oninput="filterTab9()">
+          </div>
+        </div>
+        <div class="tbl-wrap"><table id="tab9-table"><thead><tr><th onclick="sortTable('tab9-table',0)">PSD Name ↕</th><th onclick="sortTable('tab9-table',1)">Researcher ↕</th><th onclick="sortTable('tab9-table',2)">Cohort ↕</th><th onclick="sortTable('tab9-table',3)">Sprint ↕</th><th onclick="sortTable('tab9-table',4)">Complexity ↕</th><th onclick="sortTable('tab9-table',5)">Entity Count ↕</th><th onclick="sortTable('tab9-table',6)">Domain Count ↕</th><th onclick="sortTable('tab9-table',7)">Apps Count ↕</th><th onclick="sortTable('tab9-table',8)">Subsidiary ↕</th><th onclick="sortTable('tab9-table',9)">Ticket Hours ↕</th></tr></thead><tbody id="tab9-tbody"></tbody></table></div>
+        <div class="pagination"><div class="page-info" id="pg9-info"></div><div class="page-btns" id="pg9-btns"></div></div>
+      </div>
+    </div>
+
+    <!-- TAB 10: SYSTEM GENERATED TAT -->
+    <div class="tab-pane" id="tab-10">
+      <div class="filters">
+        <div class="fg"><label>Ticket Type</label><select><option>All Types</option><option>Account Research</option><option>Enforcement</option></select></div>
+        <div class="fg"><label>Cohort</label><select><option>All Cohorts</option></select></div>
+        <div class="fg"><label>Complexity</label><select><option>All</option><option>Low Complex</option><option>Medium Complex</option><option>High Complex</option></select></div>
+        <div class="fg"><label>Sprint</label><select><option>All Sprints</option></select></div>
+        <button class="btn btn-primary" style="align-self:flex-end;">Apply</button>
+      </div>
+      <div class="kpi-grid kpi-grid-4">
+        <div class="kpi-card" style="--card-accent:var(--accent-blue);">
+          <div class="kpi-icon" style="background:rgba(59,130,246,0.12);color:var(--accent-blue);"><i class="fas fa-server"></i></div>
+          <div class="kpi-label">Avg Research TAT (System)</div><div class="kpi-value">6.8 hrs</div>
+          <div class="kpi-sub">System-generated timestamp</div>
+        </div>
+        <div class="kpi-card" style="--card-accent:var(--accent-orange);">
+          <div class="kpi-icon" style="background:rgba(249,115,22,0.12);color:var(--accent-orange);"><i class="fas fa-shield-alt"></i></div>
+          <div class="kpi-label">Avg Enforcement TAT (System)</div><div class="kpi-value">12.4 hrs</div>
+          <div class="kpi-sub">System-generated timestamp</div>
+        </div>
+        <div class="kpi-card" style="--card-accent:var(--accent-emerald);">
+          <div class="kpi-icon" style="background:rgba(16,185,129,0.12);color:var(--accent-emerald);"><i class="fas fa-gavel"></i></div>
+          <div class="kpi-label">Avg Vetting TAT</div><div class="kpi-value">3.2 days</div>
+          <div class="kpi-sub">-entered TAT</div>
+        </div>
+        <div class="kpi-card" style="--card-accent:var(--accent-purple);">
+          <div class="kpi-icon" style="background:rgba(139,92,246,0.12);color:var(--accent-purple);"><i class="fas fa-balance-scale"></i></div>
+          <div class="kpi-label">Avg Legal Advise TAT</div><div class="kpi-value">5.8 days</div>
+          <div class="kpi-sub">-entered TAT</div>
+        </div>
+      </div>
+      <div class="charts-grid cg-2">
+        <div class="chart-card"><div class="chart-title">Cohort | Complexity | Avg Ticket Hours</div><div class="chart-wrap"><canvas id="c10-1" height="300"></canvas></div></div>
+        <div class="chart-card"><div class="chart-title">Researcher | System TAT (Avg Hours)</div><div class="chart-wrap"><canvas id="c10-2" height="300"></canvas></div></div>
+      </div>
+      <div class="charts-grid cg-2">
+        <div class="chart-card"><div class="chart-title">TAT Trend by Sprint — Research vs Enforcement</div><div class="chart-wrap"><canvas id="c10-3" height="280"></canvas></div></div>
+        <div class="chart-card"><div class="chart-title">SLA Compliance % by Complexity</div><div class="chart-wrap"><canvas id="c10-4" height="280"></canvas></div></div>
+      </div>
+    </div>
+
+    <!-- TAB 11: QA ANALYSIS -->
+    <div class="tab-pane" id="tab-11">
+      <div class="filters">
+        <div class="fg"><label>Cohort</label><select><option>All Cohorts</option></select></div>
+        <div class="fg"><label>Manager</label><select><option>All Managers</option></select></div>
+        <div class="fg"><label>Researcher</label><select><option>All Researchers</option></select></div>
+        <div class="fg"><label>Date From</label><input type="date" value="2025-01-01"></div>
+        <div class="fg"><label>Date To</label><input type="date" value="2026-09-27"></div>
+        <button class="btn btn-primary" style="align-self:flex-end;">Apply</button>
+      </div>
+      <div class="kpi-grid kpi-grid-4">
+        <div class="kpi-card" style="--card-accent:var(--accent-emerald);">
+          <div class="kpi-icon" style="background:rgba(16,185,129,0.12);color:var(--accent-emerald);"><i class="fas fa-star"></i></div>
+          <div class="kpi-label">Overall QA Score</div><div class="kpi-value">92%</div>
+          <div class="kpi-sub"><span class="up"><i class="fas fa-arrow-up"></i> 1.5%</span> vs last quarter</div>
+        </div>
+        <div class="kpi-card" style="--card-accent:var(--accent-blue);">
+          <div class="kpi-icon" style="background:rgba(59,130,246,0.12);color:var(--accent-blue);"><i class="fas fa-check-circle"></i></div>
+          <div class="kpi-label">QA Coverage %</div><div class="kpi-value">68%</div>
+          <div class="kpi-sub"><span class="up"><i class="fas fa-arrow-up"></i> 4.2%</span> vs last quarter</div>
+        </div>
+        <div class="kpi-card" style="--card-accent:var(--accent-purple);">
+          <div class="kpi-icon" style="background:rgba(139,92,246,0.12);color:var(--accent-purple);"><i class="fas fa-trophy"></i></div>
+          <div class="kpi-label">Top QA Performer</div><div class="kpi-value" style="font-size:20px;">Arjun K.</div>
+          <div class="kpi-sub" style="color:var(--accent-emerald);">97% QA Score</div>
+        </div>
+        <div class="kpi-card" style="--card-accent:var(--accent-amber);">
+          <div class="kpi-icon" style="background:rgba(245,158,11,0.12);color:var(--accent-amber);"><i class="fas fa-clipboard-check"></i></div>
+          <div class="kpi-label">Total QA Sessions</div><div class="kpi-value">342</div>
+          <div class="kpi-sub"><span class="up"><i class="fas fa-arrow-up"></i> 12%</span> vs last quarter</div>
+        </div>
+      </div>
+      <div class="charts-grid cg-2">
+        <div class="chart-card"><div class="chart-title">Top 15 Researchers | QA Score</div><div class="chart-wrap"><canvas id="c11-1" height="380"></canvas></div></div>
+        <div class="chart-card"><div class="chart-title">Cohort Quality Comparison</div><div class="chart-wrap"><canvas id="c11-2" height="380"></canvas></div></div>
+      </div>
+      <div class="charts-grid cg-2">
+        <div class="chart-card"><div class="chart-title">Monthly QA Score Trend</div><div class="chart-wrap"><canvas id="c11-3" height="280"></canvas></div></div>
+        <div class="chart-card"><div class="chart-title">QA Type Distribution</div><div class="chart-wrap"><canvas id="c11-4" height="280"></canvas></div></div>
+      </div>
+    </div>
+
+    <!-- TAB 12: LEGAL GLOSSARY -->
+    <div class="tab-pane" id="tab-16">
+      <div class="filters">
+        <div class="fg"><label>Date From</label><input type="date" value="2026-01-01"></div>
+        <div class="fg"><label>Priority</label><select><option>All Priorities</option><option>Critical</option><option>Major</option><option>Normal</option><option>Trivial</option></select></div>
+        <div class="fg"><label>Legal Rep</label><select><option>All Legal Reps</option></select></div>
+        <div class="fg"><label>Status</label><select><option>All Statuses</option><option>Open</option><option>In Progress</option><option>Unassigned</option></select></div>
+        <button class="btn btn-primary" style="align-self:flex-end;">Apply</button>
+      </div>
+      <div class="kpi-grid kpi-grid-4">
+        <div class="kpi-card" style="--card-accent:var(--accent-amber);">
+          <div class="kpi-icon" style="background:rgba(245,158,11,0.12);color:var(--accent-amber);"><i class="fas fa-list"></i></div>
+          <div class="kpi-label">Total Open Queue</div><div class="kpi-value">156</div>
+          <div class="kpi-sub"><span class="up"><i class="fas fa-arrow-up"></i> 5 tickets</span> vs last week</div>
+        </div>
+        <div class="kpi-card" style="--card-accent:var(--accent-rose);">
+          <div class="kpi-icon" style="background:rgba(244,63,94,0.12);color:var(--accent-rose);"><i class="fas fa-user-slash"></i></div>
+          <div class="kpi-label">Unassigned Tickets</div><div class="kpi-value">34</div>
+          <div class="kpi-sub" style="color:var(--accent-rose);">Needs immediate assignment</div>
+        </div>
+        <div class="kpi-card" style="--card-accent:var(--accent-rose);">
+          <div class="kpi-icon" style="background:rgba(244,63,94,0.12);color:var(--accent-rose);"><i class="fas fa-exclamation-circle"></i></div>
+          <div class="kpi-label">Critical Priority Open</div><div class="kpi-value">28</div>
+          <div class="kpi-sub" style="color:var(--accent-rose);">Priority escalation required</div>
+        </div>
+        <div class="kpi-card" style="--card-accent:var(--accent-blue);">
+          <div class="kpi-icon" style="background:rgba(59,130,246,0.12);color:var(--accent-blue);"><i class="fas fa-calendar-alt"></i></div>
+          <div class="kpi-label">Avg Queue Age</div><div class="kpi-value">4.7 days</div>
+          <div class="kpi-sub"><span class="down"><i class="fas fa-arrow-up"></i> 0.3d</span> vs last week</div>
+        </div>
+      </div>
+      <div class="charts-grid cg-2">
+        <div class="chart-card"><div class="chart-title">Queue by Priority</div><div class="chart-wrap"><canvas id="c16-1" height="280"></canvas></div></div>
+        <div class="chart-card"><div class="chart-title">Legal Rep | Open Queue Workload</div><div class="chart-wrap"><canvas id="c16-2" height="280"></canvas></div></div>
+      </div>
+      <div class="charts-grid cg-2">
+        <div class="chart-card"><div class="chart-title">Queue Age Distribution</div><div class="chart-wrap"><canvas id="c16-3" height="260"></canvas></div></div>
+        <div class="chart-card"><div class="chart-title">Weekly Queue Volume Trend</div><div class="chart-wrap"><canvas id="c16-4" height="260"></canvas></div></div>
+      </div>
+      <div class="table-card" style="margin-top:4px;">
+        <div class="table-toolbar"><div class="table-toolbar-title">Open Queue Register</div></div>
+        <div class="tbl-wrap"><table id="q-table"><thead><tr><th>PSD Name</th><th>Account Name</th><th>Priority</th><th>Legal Rep</th><th>Status</th><th>Created Date</th><th>Queue Age (Days)</th></tr></thead><tbody id="q-tbody"></tbody></table></div>
+      </div>
+    </div>
+
+  </div><!-- end content -->
+</div><!-- end main-wrap -->
+
+<script>
+// ─── DATA ────────────────────────────────────────────────────
+const D = {
+  researchers:['Aditi C.','Rahul S.','Priya M.','Vikram P.','Sneha R.','Arjun K.','Divya T.','Rohit N.','Meera J.','Suresh L.','Kavitha B.','Arun G.','Deepa H.','Sanjay V.','Pooja A.'],
+  cohorts:['Cohort A','Cohort B','Cohort C','Cohort D'],
+  managers:['Manager Alpha','Manager Beta','Manager Gamma'],
+  sprints:['S115','S116','S117','S118','S119','S120','S121','S122','S123','S124','S125','S126','S127','S128','S129','S130'],
+  months:['Jan 25','Feb 25','Mar 25','Apr 25','May 25','Jun 25','Jul 25','Aug 25','Sep 25','Oct 25','Nov 25','Dec 25','Jan 26','Feb 26','Mar 26'],
+  months12:['Jan 25','Feb 25','Mar 25','Apr 25','May 25','Jun 25','Jul 25','Aug 25','Sep 25','Oct 25','Nov 25','Dec 25'],
+  sprintTickets:[68,72,85,91,78,63,95,88,102,74,67,83,110,97,88,76],
+  sprintTrivials:[18,21,24,27,22,18,28,25,30,21,19,24,32,28,25,22],
+  sprintVet:[8,9,11,13,10,7,14,12,16,9,8,12,18,14,12,10],
+  cohortTickets:[312,287,245,178],
+  researcherTickets:[85,78,72,68,65,61,58,54,51,48,45,42,39,36,33],
+  monthTickets:[142,168,195,187,203,219,234,198,176,221,245,189,167,198,212],
+  resUtil:[112,98,95,91,87,84,79,76,72,68,65,62,58,54,51],
+  monthUtil:[82,85,88,79,91,94,87,83,89,92,86,88,91,87,89],
+  sprintUtil:[78,82,85,81,87,89,84,88,91,86,89,92,88,87,90,87],
+  qaScores:[97,95,93,92,91,90,88,87,85,84,83,81,80,78,76],
+  qaMonthly:[88,89,91,90,92,93,91,92,94,92,93,95],
+  blpNames:['Aditi C.','Priya M.','Sneha R.','Divya T.','Kavitha B.'],
+  blpCapUtil:[94,88,91,85,97],
+  blpReport:[28,24,21,19,17],
+  blpReview:[22,19,17,15,13],
+  blpL1:[15,13,12,10,9],
+  blpL2:[10,9,8,7,6],
+  blpDsr:[8,6,5,4,4],
+  blpMonthly:[18,22,25,21,28,31,27,24,29,33,28,25],
+  legalReps:['Aditi C.','Priya M.','Sneha R.','Divya T.','Kavitha B.','Meera J.','Rohit N.','Arjun K.'],
+  repTickets:[78,65,54,48,43,39,35,31],
+  legalByMonth:[42,48,55,51,58,62,56,52,59,64,57,54],
+  vettingTAT:[3.8,3.5,3.2,3.4,3.1,2.9,3.3,3.0,2.8,3.2,3.1,2.9],
+  legalTAT:[6.2,5.9,5.7,6.0,5.5,5.3,5.8,5.4,5.1,5.6,5.4,5.2],
+  repQueue:[24,21,18,16,14,12,10,8],
+  queueWeekly:[182,175,168,163,158,154,150,148,146,149,152,156]
+};
+
+const C_BLUE='#3B82F6',C_BLIGHT='#60A5FA',C_EMR='#10B981',C_AMB='#F59E0B',
+      C_ROSE='#F43F5E',C_PUR='#8B5CF6',C_CYN='#06B6D4',C_ORA='#F97316';
+const aBLUE='rgba(59,130,246,.7)',aEMR='rgba(16,185,129,.7)',aAMB='rgba(245,158,11,.7)',
+      aROSE='rgba(244,63,94,.7)',aPUR='rgba(139,92,246,.7)',aCYN='rgba(6,182,212,.7)',aORA='rgba(249,115,22,.7)';
+
+Chart.defaults.color='#94A3B8';
+Chart.defaults.borderColor='rgba(255,255,255,0.06)';
+Chart.defaults.font.family='Inter';
+Chart.defaults.font.size=13;
+
+const CI={};
+function mkChart(id,cfg){
+  const el=document.getElementById(id);
+  if(!el)return;
+  if(CI[id]){CI[id].destroy();}
+  CI[id]=new Chart(el,cfg);
+}
+
+const TIP={backgroundColor:'#1E2A3B',titleColor:'#F1F5F9',bodyColor:'#94A3B8',borderColor:'rgba(59,130,246,0.3)',borderWidth:1,padding:10};
+const SCALE_DARK={grid:{color:'rgba(255,255,255,0.05)'},ticks:{color:'#94A3B8',font:{size:13}}};
+const baseOpts={responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{color:'#94A3B8',font:{size:13}}},tooltip:TIP}};
+
+// ─── TAB NAVIGATION ─────────────────────────────────────────
+const TAB_NAMES={1:'Home',2:'Glossary',3:'Time Sheet',4:'Tickets Overview',5:'Utilization Overview',6:'Branding Team Utilization',7:'Incentive X Utilization',8:'Ticket Complexity',9:'Complexity Details',10:'System TAT',11:'QA Analysis'};
+const tabInited={};
+
+function showTab(n){
+  document.querySelectorAll('.tab-pane').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(i=>i.classList.remove('active'));
+  const tp=document.getElementById('tab-'+n);
+  if(tp)tp.classList.add('active');
+  const ni=document.querySelector('[data-tab="'+n+'"]');
+  if(ni)ni.classList.add('active');
+  document.getElementById('breadcrumb').textContent='/ '+TAB_NAMES[n];
+  if(!tabInited[n]){tabInited[n]=true;setTimeout(()=>initTabCharts(n),80);}
+}
+
+function toggleSidebar(){
+  document.getElementById('sidebar').classList.toggle('collapsed');
+}
+
+function initTabCharts(n){
+  if(n===3)initTab3();
+  if(n===4)initTab4();
+  if(n===5)initTab5();
+  if(n===6)initTab6();
+  if(n===7)initTab7();
+  if(n===8)initTab8();
+  if(n===9)initTab9();
+  if(n===10)initTab10();
+  if(n===11)initTab11();
+  if(n===13)initTab13();
+  if(n===14)initTab14();
+  if(n===15)initTab15();
+  if(n===16)initTab16();
+}
+
+// ─── HEADER DATE ────────────────────────────────────────────
+document.getElementById('hdrDate').textContent=new Date().toLocaleDateString('en-IN',{weekday:'short',year:'numeric',month:'short',day:'numeric'});
+
+// ─── POPULATE SPRINT DROPDOWNS ───────────────────────────────
+D.sprints.forEach(s=>{
+  ['f4-sprint'].forEach(id=>{
+    const el=document.getElementById(id);
+    if(el){const o=document.createElement('option');o.value=s;o.textContent=s;el.appendChild(o);}
+  });
+});
+D.researchers.forEach(r=>{
+  ['f4-researcher'].forEach(id=>{
+    const el=document.getElementById(id);
+    if(el){const o=document.createElement('option');o.value=r;o.textContent=r;el.appendChild(o);}
+  });
+  // f15 rep
+  const r15=document.getElementById('f15-rep');
+  if(r15){const o=document.createElement('option');o.value=r;o.textContent=r;r15.appendChild(o);}
+});
+
+// ─── TAB 3 ───────────────────────────────────────────────────
+function initTab3(){
+  mkChart('c3-1',{type:'bar',data:{labels:['Enterprise ','Mid-Market ','Mixed','New / Onboarding','Cohort A','Cohort B'],
+    datasets:[{label:'Entity Outside',data:[45,35,40,30,42,33],backgroundColor:aBLUE,borderColor:C_BLUE,borderWidth:1.5,borderRadius:5},
+              {label:'Domain Outside',data:[20,15,18,12,19,14],backgroundColor:aEMR,borderColor:C_EMR,borderWidth:1.5,borderRadius:5},
+              {label:'Apps Outside',data:[25,20,22,18,24,19],backgroundColor:aPUR,borderColor:C_PUR,borderWidth:1.5,borderRadius:5}]},
+    options:{...baseOpts,scales:{x:{...SCALE_DARK},y:{...SCALE_DARK,title:{display:true,text:'Minutes',color:'#64748B',font:{size:12}}}}}});
+}
+
+// ─── TAB 4 ───────────────────────────────────────────────────
+let f4Active={cohort:'all'};
+function initTab4(){
+  drawTab4Charts(D.sprintTickets,D.sprintTrivials,D.sprintVet,D.cohortTickets,D.researcherTickets,D.monthTickets);
+}
+function drawTab4Charts(st,stv,svet,ct,rt,mt){
+  mkChart('c4-1',{type:'bar',data:{labels:D.sprints,
+    datasets:[{label:'Full Scope',data:st,backgroundColor:'rgba(59,130,246,0.75)',borderColor:C_BLUE,borderWidth:1.5,borderRadius:4},
+              {label:'Trivial',data:stv,backgroundColor:'rgba(139,92,246,0.75)',borderColor:C_PUR,borderWidth:1.5,borderRadius:4},
+              {label:'Vet Tech',data:svet,backgroundColor:'rgba(249,115,22,0.75)',borderColor:C_ORA,borderWidth:1.5,borderRadius:4}]},
+    options:{...baseOpts,indexAxis:'y',scales:{x:{...SCALE_DARK,stacked:true},y:{...SCALE_DARK,stacked:true,ticks:{font:{size:12}}}},plugins:{...baseOpts.plugins,legend:{position:'top',labels:{color:'#94A3B8',font:{size:13}}}}}});
+
+  mkChart('c4-2',{type:'bar',data:{labels:D.cohorts,
+    datasets:[{label:'Tickets',data:ct,backgroundColor:[aBLUE,aEMR,aPUR,aAMB],borderColor:[C_BLUE,C_EMR,C_PUR,C_AMB],borderWidth:2,borderRadius:6}]},
+    options:{...baseOpts,plugins:{...baseOpts.plugins,legend:{display:false}},scales:{x:{...SCALE_DARK},y:{...SCALE_DARK}}}});
+
+  mkChart('c4-3',{type:'bar',data:{labels:D.researchers,
+    datasets:[{label:'Tickets',data:rt,backgroundColor:D.researchers.map((_,i)=>`hsla(${215+i*8},70%,${55+i*1.5}%,0.8)`),borderWidth:0,borderRadius:5}]},
+    options:{...baseOpts,indexAxis:'y',plugins:{...baseOpts.plugins,legend:{display:false}},scales:{x:{...SCALE_DARK},y:{...SCALE_DARK,ticks:{font:{size:12}}}}}});
+
+  mkChart('c4-4',{type:'line',data:{labels:D.months,
+    datasets:[{label:'Tickets Completed',data:mt,borderColor:C_BLUE,backgroundColor:'rgba(59,130,246,0.12)',fill:true,tension:0.4,pointRadius:4,pointBackgroundColor:C_BLUE}]},
+    options:{...baseOpts,scales:{x:{...SCALE_DARK,ticks:{font:{size:12}}},y:{...SCALE_DARK}}}});
+}
+function applyFilter4(){
+  const cohort=document.getElementById('f4-cohort').value;
+  const factor=cohort==='all'?1:{['Cohort A']:0.31,['Cohort B']:0.29,['Cohort C']:0.24,['Cohort D']:0.18}[cohort]||1;
+  const scale=v=>Math.round(v*factor);
+  drawTab4Charts(D.sprintTickets.map(scale),D.sprintTrivials.map(scale),D.sprintVet.map(scale),
+    cohort==='all'?D.cohortTickets:[D.cohortTickets[D.cohorts.indexOf(cohort)]||0,0,0,0].slice(0,4),
+    D.researcherTickets.map(scale),D.monthTickets.map(scale));
+  document.getElementById('kpi-4-1').textContent=Math.round(1124*factor).toLocaleString();
+  document.getElementById('kpi-4-2').textContent=Math.round(389*factor).toLocaleString();
+  document.getElementById('kpi-4-3').textContent=Math.round(203*factor).toLocaleString();
+  document.getElementById('kpi-4-4').textContent=Math.round(2847*factor).toLocaleString();
+}
+function resetFilter4(){
+  document.getElementById('f4-cohort').value='all';
+  document.getElementById('f4-sprint').value='all';
+  document.getElementById('f4-manager').value='all';
+  document.getElementById('f4-researcher').value='all';
+  drawTab4Charts(D.sprintTickets,D.sprintTrivials,D.sprintVet,D.cohortTickets,D.researcherTickets,D.monthTickets);
+  document.getElementById('kpi-4-1').textContent='1,124';
+  document.getElementById('kpi-4-2').textContent='389';
+  document.getElementById('kpi-4-3').textContent='203';
+  document.getElementById('kpi-4-4').textContent='2,847';
+}
+
+// ─── TAB 5 ───────────────────────────────────────────────────
+function initTab5(){
+  const uColors=D.resUtil.map(v=>v>=100?aEMR:v>=80?aBLUE:v>=50?aAMB:aROSE);
+  mkChart('c5-1',{type:'bar',data:{labels:D.researchers,
+    datasets:[{label:'Cap Util %',data:D.resUtil,backgroundColor:uColors,borderWidth:0,borderRadius:5}]},
+    options:{...baseOpts,indexAxis:'y',plugins:{...baseOpts.plugins,legend:{display:false},annotation:{annotations:{line:{type:'line',xMin:100,xMax:100,borderColor:'rgba(244,63,94,0.5)',borderWidth:2,borderDash:[6,4]}}}},scales:{x:{...SCALE_DARK,max:130,ticks:{callback:v=>v+'%',font:{size:12}}},y:{...SCALE_DARK,ticks:{font:{size:12}}}}}});
+
+  mkChart('c5-2',{type:'bar',data:{labels:D.months,
+    datasets:[{label:'Cap Util %',data:D.monthUtil,backgroundColor:D.monthUtil.map(v=>v>=90?aEMR:v>=80?aBLUE:aAMB),borderRadius:5,borderWidth:0}]},
+    options:{...baseOpts,plugins:{...baseOpts.plugins,legend:{display:false}},scales:{x:{...SCALE_DARK,ticks:{font:{size:11}}},y:{...SCALE_DARK,ticks:{callback:v=>v+'%'}}}}});
+
+  mkChart('c5-3',{type:'doughnut',data:{
+    labels:['Over Utilized (≥100%)','Moderate (80–99%)','Under (50–79%)','Not Utilized (<50%)'],
+    datasets:[{data:[8,10,4,2],backgroundColor:[aEMR,aBLUE,aAMB,aROSE],borderColor:['#0A0F1E'],borderWidth:3,hoverOffset:6}]},
+    options:{...baseOpts,cutout:'62%',plugins:{...baseOpts.plugins,legend:{position:'right',labels:{color:'#94A3B8',font:{size:13},padding:16}}}}});
+
+  mkChart('c5-4',{type:'line',data:{labels:D.sprints,
+    datasets:[{label:'Team Avg Util %',data:D.sprintUtil,borderColor:C_BLUE,backgroundColor:'rgba(59,130,246,0.1)',fill:true,tension:0.4,pointRadius:3}]},
+    options:{...baseOpts,scales:{x:{...SCALE_DARK,ticks:{font:{size:11}}},y:{...SCALE_DARK,ticks:{callback:v=>v+'%'}}}}});
+}
+
+// ─── TAB 6 ───────────────────────────────────────────────────
+function initTab6(){
+  mkChart('c6-1',{type:'bar',data:{labels:D.blpNames,
+    datasets:[{label:'Report Count',data:D.blpReport,backgroundColor:aBLUE,borderRadius:4},
+              {label:'Research Review',data:D.blpReview,backgroundColor:aEMR,borderRadius:4},
+              {label:'L1 Review',data:D.blpL1,backgroundColor:aAMB,borderRadius:4},
+              {label:'L2 Review',data:D.blpL2,backgroundColor:aPUR,borderRadius:4},
+              {label:'DSR',data:D.blpDsr,backgroundColor:aCYN,borderRadius:4}]},
+    options:{...baseOpts,scales:{x:{...SCALE_DARK},y:{...SCALE_DARK}}}});
+
+  mkChart('c6-2',{type:'line',data:{labels:D.months12,
+    datasets:[{label:'Monthly Activity',data:D.blpMonthly,borderColor:C_CYN,backgroundColor:'rgba(6,182,212,0.1)',fill:true,tension:0.4,pointRadius:4,pointBackgroundColor:C_CYN}]},
+    options:{...baseOpts,scales:{x:{...SCALE_DARK,ticks:{font:{size:11}}},y:{...SCALE_DARK}}}});
+
+  mkChart('c6-3',{type:'bar',data:{labels:D.blpNames,
+    datasets:[{label:'Branding Team Cap Util %',data:D.blpCapUtil,backgroundColor:D.blpCapUtil.map(v=>v>=90?aEMR:v>=80?aBLUE:aAMB),borderRadius:5,borderWidth:0}]},
+    options:{...baseOpts,indexAxis:'y',plugins:{...baseOpts.plugins,legend:{display:false}},scales:{x:{...SCALE_DARK,ticks:{callback:v=>v+'%'}},y:{...SCALE_DARK}}}});
+
+  mkChart('c6-4',{type:'doughnut',data:{
+    labels:['Research Time','Report Making','Research Review','L1 Review','L2 Review+DSR'],
+    datasets:[{data:[48320,31240,22000,14800,9800],backgroundColor:[aBLUE,aPUR,aEMR,aAMB,aCYN],borderColor:'#0A0F1E',borderWidth:3,hoverOffset:6}]},
+    options:{...baseOpts,cutout:'60%',plugins:{...baseOpts.plugins,legend:{position:'right',labels:{color:'#94A3B8',font:{size:13},padding:14}}}}});
+}
+
+// ─── TAB 7 ───────────────────────────────────────────────────
+const QIP_DATA=D.researchers.map((r,i)=>{
+  const target=80+Math.floor(Math.random()*20);
+  const completed=Math.max(55,target-5+Math.floor(Math.random()*12)-3);
+  const capUtil=Math.round((completed/target)*100);
+  const proj=Math.round(capUtil*(0.9+Math.random()*0.2));
+  const cats=['Over Utilized','Moderate Utilized','Under Utilized','Moderate Utilized','Over Utilized'];
+  const cat=capUtil>=100?'Over Utilized':capUtil>=80?'Moderate Utilized':capUtil>=60?'Under Utilized':'Not Utilized';
+  const cohorts=['Cohort A','Cohort A','Cohort B','Cohort B','Cohort C','Cohort C','Cohort D','Cohort A','Cohort B','Cohort C','Cohort A','Cohort B','Cohort C','Cohort D','Cohort A'];
+  return {researcher:r,cohort:cohorts[i]||'Cohort A',target,completed,capUtil,proj,cat};
+});
+
+function initTab7(){
+  const tb=document.getElementById('qip-tbody');
+  tb.innerHTML='';
+  QIP_DATA.forEach(row=>{
+    const badgeCls={['Over Utilized']:'badge-over',['Moderate Utilized']:'badge-mod',['Under Utilized']:'badge-under',['Not Utilized']:'badge-not'}[row.cat]||'badge-mod';
+    const status=row.completed>=row.target?'<span class="badge badge-over">On Target</span>':'<span class="badge badge-under">Tracking</span>';
+    tb.innerHTML+=`<tr><td>${row.researcher}</td><td>${row.cohort}</td><td>${row.target}</td><td><strong>${row.completed}</strong></td><td>${row.capUtil}%</td><td>${row.proj}%</td><td><span class="badge ${badgeCls}">${row.cat}</span></td><td>${status}</td></tr>`;
+  });
+
+  mkChart('c7-1',{type:'bar',data:{labels:D.researchers,
+    datasets:[{label:'Completed',data:QIP_DATA.map(r=>r.completed),backgroundColor:aEMR,borderRadius:4},
+              {label:'Target',data:QIP_DATA.map(r=>r.target),backgroundColor:'rgba(255,255,255,0.1)',borderRadius:4,borderColor:'rgba(255,255,255,0.2)',borderWidth:1.5}]},
+    options:{...baseOpts,indexAxis:'y',scales:{x:{...SCALE_DARK},y:{...SCALE_DARK,ticks:{font:{size:12}}}}}});
+}
+
+// ─── TAB 8 ───────────────────────────────────────────────────
+function initTab8(){
+  const ttypes=['Account Research','IntelliTrack Account Research','Enforcement','IntelliTrack Enforcement'];
+  mkChart('c8-1',{type:'bar',data:{labels:ttypes,
+    datasets:[{label:'Low Complex',data:[245,312,67,54],backgroundColor:aEMR,borderRadius:4},
+              {label:'Medium Complex',data:[98,145,48,21],backgroundColor:aAMB,borderRadius:4},
+              {label:'High Complex',data:[34,67,23,10],backgroundColor:aROSE,borderRadius:4}]},
+    options:{...baseOpts,scales:{x:{...SCALE_DARK},y:{...SCALE_DARK}}}});
+
+  mkChart('c8-2',{type:'bar',data:{labels:['Low Complex','Medium Complex','High Complex'],
+    datasets:[{label:'Avg Ticket Hours',data:[4.2,8.9,18.4],backgroundColor:[aEMR,aAMB,aROSE],borderWidth:0,borderRadius:6}]},
+    options:{...baseOpts,indexAxis:'y',plugins:{...baseOpts.plugins,legend:{display:false}},scales:{x:{...SCALE_DARK,title:{display:true,text:'Hours',color:'#64748B'}},y:{...SCALE_DARK}}}});
+
+  mkChart('c8-3',{type:'doughnut',data:{labels:['Low Complex (678)','Medium Complex (312)','High Complex (134)'],
+    datasets:[{data:[678,312,134],backgroundColor:[aEMR,aAMB,aROSE],borderColor:'#0A0F1E',borderWidth:3,hoverOffset:6}]},
+    options:{...baseOpts,cutout:'60%',plugins:{...baseOpts.plugins,legend:{position:'right',labels:{color:'#94A3B8',font:{size:13}}}}}});
+
+  const lowTrend=[45,48,52,49,55,58,53,56,62,57,60,65,68,63,60,58];
+  const medTrend=[18,20,22,21,24,26,23,25,28,24,22,27,30,26,24,22];
+  const highTrend=[5,6,7,8,7,6,8,9,10,8,7,9,12,10,8,8];
+  mkChart('c8-4',{type:'line',data:{labels:D.sprints,
+    datasets:[{label:'Low Complex',data:lowTrend,borderColor:C_EMR,backgroundColor:'transparent',tension:0.4,pointRadius:3},
+              {label:'Medium Complex',data:medTrend,borderColor:C_AMB,backgroundColor:'transparent',tension:0.4,pointRadius:3},
+              {label:'High Complex',data:highTrend,borderColor:C_ROSE,backgroundColor:'transparent',tension:0.4,pointRadius:3}]},
+    options:{...baseOpts,scales:{x:{...SCALE_DARK,ticks:{font:{size:11}}},y:{...SCALE_DARK}}}});
+}
+
+// ─── TAB 9 ───────────────────────────────────────────────────
+const complexities=['Low Complex','Medium Complex','High Complex'];
+const TAB9_DATA=(()=>{
+  const rows=[];
+  const accs=['Stellaris Corp','Nexus Media','Vortex Brands','Apex Solutions','Meridian Group','TerraFont Inc','GlobalType Co','FontFactory','TypoWorks','Brandline','PixelPress','ClearMark','TypeCraft','InkBrands','FontForge','SignalType','BoldMark','LithoFont','ArcBrands','PrintMaster'];
+  for(let i=0;i<50;i++){
+    const comp=complexities[i%3];
+    const lem=comp==='Low Complex'?2+Math.floor(Math.random()*3):comp==='Medium Complex'?4+Math.floor(Math.random()*4):7+Math.floor(Math.random()*6);
+    const dom=1+Math.floor(Math.random()*8);
+    const app=Math.floor(Math.random()*12);
+    const sub=1+Math.floor(Math.random()*5);
+    const hrs=comp==='Low Complex'?+(2+Math.random()*4).toFixed(1):comp==='Medium Complex'?+(6+Math.random()*6).toFixed(1):+(12+Math.random()*12).toFixed(1);
+    rows.push({psd:`Ticket-${2025+Math.floor(i/10)}-${(1000+i).toString()}`,researcher:D.researchers[i%15],cohort:D.cohorts[i%4],sprint:D.sprints[i%16],complexity:comp,lem,dom,app,sub,hrs});
+  }
+  return rows;
+})();
+
+let tab9Filtered=[...TAB9_DATA];
+let tab9Page=1;
+const PER_PAGE=15;
+
+function filterTab9(){
+  const comp=document.getElementById('f9-complexity').value;
+  const q=(document.getElementById('search-9').value||'').toLowerCase();
+  tab9Filtered=TAB9_DATA.filter(r=>{
+    const matchComp=comp==='all'||r.complexity===comp;
+    const matchQ=!q||r.psd.toLowerCase().includes(q)||r.researcher.toLowerCase().includes(q);
+    return matchComp&&matchQ;
+  });
+  tab9Page=1;
+  renderTab9();
+}
+
+function renderTab9(){
+  const tb=document.getElementById('tab9-tbody');
+  const start=(tab9Page-1)*PER_PAGE;
+  const slice=tab9Filtered.slice(start,start+PER_PAGE);
+  tb.innerHTML=slice.map(r=>`<tr><td><code style="color:var(--accent-cyan);font-size:12px;">${r.psd}</code></td><td>${r.researcher}</td><td>${r.cohort}</td><td>${r.sprint}</td><td><span class="badge badge-${r.complexity==='Low Complex'?'low':r.complexity==='Medium Complex'?'med':'high'}">${r.complexity}</span></td><td>${r.lem}</td><td>${r.dom}</td><td>${r.app}</td><td>${r.sub}</td><td>${r.hrs}h</td></tr>`).join('');
+  const total=tab9Filtered.length;
+  const pages=Math.ceil(total/PER_PAGE);
+  document.getElementById('pg9-info').textContent=`Showing ${Math.min(start+1,total)}–${Math.min(start+PER_PAGE,total)} of ${total} records`;
+  const pb=document.getElementById('pg9-btns');
+  pb.innerHTML='';
+  for(let p=1;p<=pages;p++){
+    const b=document.createElement('button');
+    b.className='pg-btn'+(p===tab9Page?' active':'');
+    b.textContent=p;b.onclick=()=>{tab9Page=p;renderTab9();};
+    pb.appendChild(b);
+  }
+}
+
+function initTab9(){filterTab9();}
+
+// ─── TAB 10 ───────────────────────────────────────────────────
+function initTab10(){
+  mkChart('c10-1',{type:'bar',data:{labels:D.cohorts,
+    datasets:[{label:'Low Complex',data:[4.8,3.9,5.2,3.5],backgroundColor:aEMR,borderRadius:4},
+              {label:'Medium Complex',data:[9.2,8.1,10.5,7.8],backgroundColor:aAMB,borderRadius:4},
+              {label:'High Complex',data:[19.3,16.8,21.4,15.2],backgroundColor:aROSE,borderRadius:4}]},
+    options:{...baseOpts,scales:{x:{...SCALE_DARK},y:{...SCALE_DARK,title:{display:true,text:'Hours',color:'#64748B'}}}}});
+
+  mkChart('c10-2',{type:'bar',data:{labels:D.researchers.slice(0,10),
+    datasets:[{label:'Avg TAT (Hours)',data:[6.2,7.1,5.8,8.4,6.9,7.5,5.2,9.1,6.7,8.2],backgroundColor:aBLUE,borderRadius:4}]},
+    options:{...baseOpts,indexAxis:'y',plugins:{...baseOpts.plugins,legend:{display:false}},scales:{x:{...SCALE_DARK},y:{...SCALE_DARK,ticks:{font:{size:12}}}}}});
+
+  mkChart('c10-3',{type:'line',data:{labels:D.sprints,
+    datasets:[{label:'Research TAT (hrs)',data:[6.5,6.8,7.1,6.2,7.4,6.9,7.8,7.2,6.5,7.1,6.8,7.5,6.9,7.2,6.8,7.1],borderColor:C_BLUE,tension:0.4,pointRadius:3},
+              {label:'Enforcement TAT (hrs)',data:[12.1,12.8,13.2,11.5,13.8,12.4,14.2,13.6,12.1,13.3,12.7,14.1,12.9,13.5,12.7,13.2],borderColor:C_ORA,tension:0.4,pointRadius:3}]},
+    options:{...baseOpts,scales:{x:{...SCALE_DARK,ticks:{font:{size:11}}},y:{...SCALE_DARK,title:{display:true,text:'Hours',color:'#64748B'}}}}});
+
+  mkChart('c10-4',{type:'bar',data:{labels:['Low Complex','Medium Complex','High Complex'],
+    datasets:[{label:'Within SLA %',data:[94,81,68],backgroundColor:[aEMR,aAMB,aROSE],borderRadius:6}]},
+    options:{...baseOpts,plugins:{...baseOpts.plugins,legend:{display:false}},scales:{x:{...SCALE_DARK},y:{...SCALE_DARK,max:100,ticks:{callback:v=>v+'%'}}}}});
+}
+
+// ─── TAB 11 ───────────────────────────────────────────────────
+function initTab11(){
+  mkChart('c11-1',{type:'bar',data:{labels:D.researchers,
+    datasets:[{label:'QA Score %',data:D.qaScores,backgroundColor:D.qaScores.map(v=>v>=95?aEMR:v>=90?aBLUE:v>=85?aAMB:aROSE),borderRadius:5,borderWidth:0}]},
+    options:{...baseOpts,indexAxis:'y',plugins:{...baseOpts.plugins,legend:{display:false}},scales:{x:{...SCALE_DARK,min:70,max:100,ticks:{callback:v=>v+'%'}},y:{...SCALE_DARK,ticks:{font:{size:12}}}}}});
+
+  mkChart('c11-2',{type:'bar',data:{labels:D.cohorts,
+    datasets:[{label:'Overall QA',data:[93,91,89,87],backgroundColor:aBLUE,borderRadius:4},
+              {label:'Research QA',data:[94,92,90,88],backgroundColor:aEMR,borderRadius:4},
+              {label:'Vetting QA',data:[91,89,87,85],backgroundColor:aPUR,borderRadius:4}]},
+    options:{...baseOpts,scales:{x:{...SCALE_DARK},y:{...SCALE_DARK,ticks:{callback:v=>v+'%'}}}}});
+
+  mkChart('c11-3',{type:'line',data:{labels:D.months12,
+    datasets:[{label:'Monthly QA Score',data:D.qaMonthly,borderColor:C_EMR,backgroundColor:'rgba(16,185,129,0.1)',fill:true,tension:0.4,pointRadius:4,pointBackgroundColor:C_EMR}]},
+    options:{...baseOpts,scales:{x:{...SCALE_DARK,ticks:{font:{size:11}}},y:{...SCALE_DARK,min:85,ticks:{callback:v=>v+'%'}}}}});
+
+  mkChart('c11-4',{type:'doughnut',data:{labels:['Research QA','Vetting QA','PIM QA'],
+    datasets:[{data:[142,123,77],backgroundColor:[aBLUE,aPUR,aEMR],borderColor:'#0A0F1E',borderWidth:3,hoverOffset:6}]},
+    options:{...baseOpts,cutout:'62%',plugins:{...baseOpts.plugins,legend:{position:'right',labels:{color:'#94A3B8',font:{size:13}}}}}});
+}
+
+// ─── TAB 13 ───────────────────────────────────────────────────
+
+
+// ─── TAB 14 ───────────────────────────────────────────────────
+
+
+// ─── TAB 15 ───────────────────────────────────────────────────
+const tasks=['Vetting','Vetting','Legal Advise','Contract Review','Vetting','Legal Advise','Vetting'];
+const regions=['Americas','EMEA','APAC','Global'];
+const priorities=['Critical','Major','Major','Normal','Critical'];
+const compFlags=['Compliant','Compliant','Non-Compliant','Not Applicable'];
+const accounts=['Stellaris Corp','Nexus Media','Vortex Brands','Apex Solutions','Meridian Group','TerraFont Inc','GlobalType Co','FontFactory','TypoWorks','Brandline'];
+const TAB15_DATA=(()=>{
+  const rows=[];
+  for(let i=0;i<50;i++){
+    const task=tasks[i%tasks.length];
+    const rep=D.legalReps[i%8];
+    const mgr=D.managers[i%3];
+    const tat=task==='Vetting'?+(1.5+Math.random()*5).toFixed(1):+(2+Math.random()*9).toFixed(1);
+    const comp=task==='Contract Review'?'Not Applicable':compFlags[i%compFlags.length];
+    const created=new Date(2025,Math.floor(i/5),1+i%28);
+    const completed=new Date(created.getTime()+(tat+1)*86400000);
+    rows.push({psd:`Ticket-${2025+Math.floor(i/20)}-${(2000+i)}`,account:accounts[i%10],task,rep,mgr,priority:priorities[i%5],region:regions[i%4],comp,created:created.toLocaleDateString('en-IN'),completed:completed.toLocaleDateString('en-IN'),tat});
+  }
+  return rows;
+})();
+
+let tab15Filtered=[...TAB15_DATA],tab15Page=1;
+
+
+
+
+
+
+
+
+
+// ─── TAB 16 ───────────────────────────────────────────────────
+const QUEUE_DATA=(()=>{
+  const rows=[];
+  const statuses=['Open','In Progress','Unassigned','Open','In Progress'];
+  for(let i=0;i<40;i++){
+    const days=Math.floor(Math.random()*20)+1;
+    const created=new Date(Date.now()-days*86400000);
+    rows.push({psd:`Q-${2026}-${(3000+i)}`,account:accounts[i%10],priority:priorities[i%5],rep:i%5===0?'Unassigned':D.legalReps[i%8],status:i%5===0?'Unassigned':statuses[i%5],created:created.toLocaleDateString('en-IN'),age:days});
+  }
+  return rows;
+})();
+
+
+
+// ─── TABLE SORT ─────────────────────────────────────────────
+function sortTable(tid,col){
+  const tbl=document.getElementById(tid);
+  if(!tbl)return;
+  const rows=Array.from(tbl.querySelectorAll('tbody tr'));
+  let asc=tbl.dataset.sortAsc!=='true'||parseInt(tbl.dataset.sortCol||'-1')!==col;
+  tbl.dataset.sortCol=col;tbl.dataset.sortAsc=asc;
+  rows.sort((a,b)=>{
+    const av=a.cells[col]?.textContent?.trim()||'';
+    const bv=b.cells[col]?.textContent?.trim()||'';
+    const an=parseFloat(av),bn=parseFloat(bv);
+    const cmp=isNaN(an)||isNaN(bn)?av.localeCompare(bv,undefined,{numeric:true}):an-bn;
+    return asc?cmp:-cmp;
+  });
+  const tb=tbl.querySelector('tbody');
+  rows.forEach(r=>tb.appendChild(r));
+}
+
+// ─── BOOT ────────────────────────────────────────────────────
+document.addEventListener('DOMContentLoaded',()=>{
+  showTab(1);
+  // Pre-init tab 4 since it's the main operational page
+  setTimeout(()=>{showTab(4);},100);
+});
+</script>
+</body>
+</html>
