@@ -10,7 +10,7 @@ This section highlights strategic Revenue Operations (RevOps) solutions built to
 
 ---
 
-### 🚀 [Launch Live Interactive RevOps Dashboard (click to open)](https://sachin2922.github.io/Sachin-Analytics-Portfolio/RevOps_Pipeline_Health_Dashboard.html)
+### 🚀 [Launch Live Interactive RevOps Dashboard (click to open)](https://sachin2922.github.io/Sachin-Analytics-Portfolio/RevOps-Projects/RevOps_Pipeline_Health_Dashboard.html)
 
 *Direct cloud-hosted interactive version. Fully functional with multi-filter slicers, deal health scoring, and stage diagnostics.*
 
