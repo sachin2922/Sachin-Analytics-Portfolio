@@ -1,8 +1,8 @@
-# Supermart Commercial Retail Analytics & Customer Intelligence
+# Supermart Enterprise Commercial Retail Analytics & Customer Intelligence (PostgreSQL)
 
 <p align="center">
   <img src="https://img.shields.io/badge/Domain-Commercial%20Retail%20Analytics-353744?style=for-the-badge" alt="Domain" />
-  <img src="https://img.shields.io/badge/Database-PostgreSQL%20|%20ANSI%20SQL-00758F?style=for-the-badge&logo=postgresql&logoColor=white" alt="Database" />
+  <img src="https://img.shields.io/badge/Database-PostgreSQL-00758F?style=for-the-badge&logo=postgresql&logoColor=white" alt="Database" />
   <img src="https://img.shields.io/badge/Dataset-10K%20Transactions%20|%20Star%20Schema-1155CC?style=for-the-badge" alt="Dataset" />
 </p>
 
@@ -192,5 +192,5 @@ ORDER BY region, regional_profit_rank;
 ---
 
 ### 📁 Files in This Directory
-* 💾 [`supermart_retail_analytics.sql`](./supermart_retail_analytics.sql): Full executable PostgreSQL / ANSI SQL script.
+* 💾 [`supermart_retail_analytics.sql`](./supermart_retail_analytics.sql): Full executable PostgreSQL script.
 * 📊 `assets/`: 5 high-resolution presentation charts & ERD diagram.

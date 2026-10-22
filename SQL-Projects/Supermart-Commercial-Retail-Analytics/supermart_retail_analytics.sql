@@ -1,7 +1,7 @@
 -- =============================================================================
 -- Supermart Enterprise Commercial Retail Analytics & Customer Intelligence Suite
 -- Author: Sachin Sharma (Commercial Analytics & RevOps Leader)
--- Dialect: PostgreSQL / ANSI SQL Standard
+-- Dialect: PostgreSQL
 -- Description:
 --     Production-grade SQL analytics suite modeling 10,000+ omnichannel retail
 --     orders. Features Star Schema relational modeling, multi-table P&L joins,

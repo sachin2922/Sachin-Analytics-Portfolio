@@ -14,7 +14,7 @@ Welcome to my central SQL repository. This portfolio showcases production-grade 
 
 | Project Domain | Core Business Question Solved | Key SQL Techniques & Methods | Explore Project |
 | :--- | :--- | :--- | :--- |
-| **🛒 Supermart Commercial Retail Analytics** | *Where is our \$2.3M retail revenue losing profit, and at what discount % do orders turn negative?* | Star Schema (Fact/Dims), Window Functions (`NTILE`, `DENSE_RANK`), P&L Joins, Seasonality | [👉 Open Suite](./Supermart-Commercial-Retail-Analytics) |
+| **🛒 Supermart Commercial Retail Analytics (PostgreSQL)** | *Where is our \$2.3M retail revenue losing profit, and at what discount % do orders turn negative?* | Star Schema (Fact/Dims), Window Functions (`NTILE`, `DENSE_RANK`), P&L Joins, Seasonality | [👉 Open Suite](./Supermart-Commercial-Retail-Analytics) |
 | **💼 Salesforce Pipeline Health Scoring** | *Which CRM deals are stagnating past SLA benchmarks and putting quarterly ARR at risk?* | Multi-tier Modular CTEs, Dwell-Time SLAs, Composite Algorithmic Health Scoring (0–100) | [👉 Open Suite](./Salesforce-Pipeline-Health-Scoring) |
 
 ---
@@ -23,7 +23,7 @@ Welcome to my central SQL repository. This portfolio showcases production-grade 
 
 ---
 
-#### 1. [Supermart Commercial Retail Analytics & Customer Intelligence](./Supermart-Commercial-Retail-Analytics)
+#### 1. [Supermart Enterprise Commercial Retail Analytics & Customer Intelligence (PostgreSQL)](./Supermart-Commercial-Retail-Analytics)
 * **The Problem:** An omnichannel retail enterprise generated \$2.3M in sales, but severe promotional discounting (up to 80%) eroded bottom-line margins in categories like Furniture (yielding an anemic 2.49% net margin).
 * **The SQL Architecture:** Modeled 10,000+ transaction rows into a relational Star Schema (`dim_customer`, `dim_product`, `fact_sales`). Analyzed category P&L performance, discount bleed sensitivity, and customer lifetime value (LTV).
 * **Visual Insights:** Established that discounts **above 20%** cause net profit to collapse into negative territory (**-10% to -119% loss** per order) and proved Q4 holiday surges account for 35% of annual revenue.
