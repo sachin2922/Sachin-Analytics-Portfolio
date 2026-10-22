@@ -52,9 +52,12 @@ For hiring managers and recruiters looking for immediate interactive product dem
 
 ---
 
-### 🛠️ Core Analytical Toolset
+### 🛠️ Core Analytical & Technical Toolset
 
-* **Business Intelligence & Visualization:** Power BI, Tableau, Advanced Excel (Power Query, Dynamic Pivot Models)
-* **Data Engineering & Querying:** Advanced SQL (CTEs, Window Functions, Schema Normalization), Python ETL (Pandas, Requests)
-* **Enterprise CRM & Revenue Systems:** Salesforce CRM (Opportunity, Pipeline, Seller Productivity Analytics)
-* **Strategic Methodologies:** Capacity Balancing, Root-Cause Diagnostics, MECE Problem-Solving, KPI Governance
+* **Business Intelligence & Visualization:** Power BI, Tableau, Advanced Excel (Power Query, Dynamic Pivot Models, DAX Measures, Executive Telemetry Dashboards)
+* **Data Engineering & Cloud Warehousing:** Advanced SQL (Multi-table CTEs, Window Functions, Schema Normalization), Python ETL (Pandas, NumPy, Requests), Snowflake, Alteryx, SQLite, Data Lineage & Cleaning Automation
+* **Data Science, Statistics & NLP:** Applied Statistics, Predictive Revenue Forecasting, Exploratory Data Analysis (EDA), TextBlob (NLP Sentiment Mining, N-Grams), Time-Series Modeling, Elasticity Diagnostics
+* **Enterprise CRM & Revenue Operations:** Salesforce CRM (Pipeline Health, Dwell-Time SLA Tracking, Stuck Stage Diagnostics, ACV Banding, Seller Productivity)
+* **AI-Native & Modern Automation:** AI-Native Analytical Workflows, LLM Copilots, Prompt Engineering, Automated Data Extraction & Hygiene Pipelines
+* **Process Operations & Strategy:** Workforce Capacity Balancing, Turnaround Time (TAT) Optimization, Work Order & Service Level (SLA) Tracking, ARR Expansion Analysis, Root-Cause Diagnostics, MECE Problem-Solving
+* **Leadership, Agile & Software Governance:** Agile Sprint Planning, Cross-Functional Delivery (Operations, Sales, Tech, Finance), User Acceptance Testing (UAT), Functional Specification Documents (FSDs), KPI Governance, QA Audit Frameworks
