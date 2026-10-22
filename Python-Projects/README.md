@@ -2,8 +2,8 @@
 
 <p align="center">
   <img src="https://img.shields.io/badge/Stack-Python%20|%20Pandas%20|%20NumPy-1155CC?style=for-the-badge&logo=python" alt="Python Stack" />
-  <img src="https://img.shields.io/badge/Specializations-RevOps%20|%20NLP%20|%20Geospatial%20|%20Quant-353744?style=for-the-badge" alt="Domains" />
-  <img src="https://img.shields.io/badge/Projects-6%20Production%20Suites-00AB44?style=for-the-badge" alt="Projects" />
+  <img src="https://img.shields.io/badge/Specializations-NLP%20|%20Geospatial%20|%20Time--Series%20|%20Sports%20Quant-353744?style=for-the-badge" alt="Domains" />
+  <img src="https://img.shields.io/badge/Projects-5%20Production%20Suites-00AB44?style=for-the-badge" alt="Projects" />
 </p>
 
 Welcome to my Python analytics repository. This portfolio showcases production-grade data engineering, predictive revenue modeling, Natural Language Processing (NLP), geospatial optimization, and time-series financial analysis.
@@ -16,7 +16,6 @@ Rather than standalone code, every project here is engineered to solve a specifi
 
 | Project Domain | Core Business Question Solved | Key Methodology & Tools | Explore Project |
 | :--- | :--- | :--- | :--- |
-| **💼 Salesforce CRM Pipeline ETL** | *Which sales deals are silently stagnating and risking our quarterly revenue target?* | Automated ETL, Dwell-Time SLAs, Algorithmic Health Scoring (0–100) | [👉 View Project](./Salesforce%20CRM%20Pipeline%20ETL) |
 | **🛒 E-Commerce Sales Analytics** | *When should we run marketing ads, which products are bought together, and where should inventory sit?* | Combinatorial Market Basket Analysis, Price Elasticity, 185K+ Transactions | [👉 View Project](./E-Commerce%20Sales%20Data%20Analytics) |
 | **📍 Zomato Geospatial Analytics** | *Does digital delivery improve restaurant ratings, and where are Bangalore's best expansion pockets?* | SQLite Data Ingestion, Rating Hygiene, NLP Review Text Mining (Unigrams/Bigrams) | [👉 View Project](./Zomato%20Geospatial%20Data%20Analytics) |
 | **📈 S&P 500 Time Series Stocks** | *Does holding multiple big-tech stocks truly diversify risk, or does it multiply downside exposure?* | Moving Average Crossovers (10/20/50 SMA), Daily Returns Volatility, Correlation Matrices | [👉 View Project](./S%26P%20Global%20Time%20Series%20Stock%20Market%20Data%20Analytics) |
@@ -29,15 +28,7 @@ Rather than standalone code, every project here is engineered to solve a specifi
 
 ---
 
-#### 1. [Salesforce CRM Pipeline & Revenue Health ETL](./Salesforce%20CRM%20Pipeline%20ETL)
-* **The Problem:** Sales leaders often discover deal slippage in the final week of the quarter because static CRM reports lack automated dwell-time tracking.
-* **The Solution:** Built an automated Python ETL script that cleans CRM data, tracks days spent in each stage against SLA benchmarks, and calculates a 0–100 Health Score to triage pipeline risk.
-* **Visual Result:** Surfaced 28% of open pipeline in the *Critical Intervention* band and isolated a 45% dwell-time bottleneck in the Proposal stage.
-* **Commercial Impact:** **+15% ARR expansion** through prioritized salvage of high-risk enterprise opportunities.
-
----
-
-#### 2. [E-Commerce Commercial Sales Data Analytics](./E-Commerce%20Sales%20Data%20Analytics)
+#### 1. [E-Commerce Commercial Sales Data Analytics](./E-Commerce%20Sales%20Data%20Analytics)
 * **The Problem:** Retailers waste advertising budgets during low-conversion hours and miss out on high-margin accessory sales at checkout.
 * **The Solution:** Analyzed 186,000+ customer transactions across top US metropolitan areas to evaluate monthly seasonality, geographic revenue concentration, and co-purchase pairings.
 * **Visual Result:** Uncovered twin purchase surges at **11:00 AM** and **7:00 PM**, proved San Francisco leads revenue with **\$8.26M**, and identified top checkout pairings (iPhone + Lightning Cable).
@@ -45,7 +36,7 @@ Rather than standalone code, every project here is engineered to solve a specifi
 
 ---
 
-#### 3. [Zomato Restaurant Market Intelligence & Geospatial Analytics](./Zomato%20Geospatial%20Data%20Analytics)
+#### 2. [Zomato Restaurant Market Intelligence & Geospatial Analytics](./Zomato%20Geospatial%20Data%20Analytics)
 * **The Problem:** 60% of new restaurants fail within 12 months due to poor location selection and unoptimized menus.
 * **The Solution:** Extracted and normalized 50,000+ restaurant venues from an SQLite database, evaluated delivery channel ROI, and applied NLP text mining to customer review streams.
 * **Visual Result:** Proved delivery-enabled restaurants achieve higher customer ratings (**3.72 ★ vs. 3.48 ★**), mapped hyper-dense corridors in BTM and Koramangala, and extracted top cravings (Biryani, Waffles, Pizza).
@@ -53,7 +44,7 @@ Rather than standalone code, every project here is engineered to solve a specifi
 
 ---
 
-#### 4. [S&P Global Time Series Stock Market Data Analytics](./S%26P%20Global%20Time%20Series%20Stock%20Market%20Data%20Analytics)
+#### 3. [S&P Global Time Series Stock Market Data Analytics](./S%26P%20Global%20Time%20Series%20Stock%20Market%20Data%20Analytics)
 * **The Problem:** Investors mistakenly believe holding multiple mega-cap tech stocks (Apple, Microsoft, Google, Amazon) protects them from downside drawdowns.
 * **The Solution:** Evaluated 5 years of daily trading data (1,250+ days), modeled rolling Simple Moving Averages (10/20/50 SMA), calculated daily return volatility distributions, and constructed cross-asset correlation heatmaps.
 * **Visual Result:** Proved price correlation between big-tech assets exceeds **0.90** (meaning they move in lockstep), while the 50-day SMA serves as the primary technical support floor.
@@ -61,7 +52,7 @@ Rather than standalone code, every project here is engineered to solve a specifi
 
 ---
 
-#### 5. [YouTube Text Mining, Audience Sentiment & Virality Analytics](./Youtube%20Text%20Data%20Analytics)
+#### 4. [YouTube Text Mining, Audience Sentiment & Virality Analytics](./Youtube%20Text%20Data%20Analytics)
 * **The Problem:** Content creators and brands struggle to understand viewer reception from raw view counts alone and lack data on what headline styles drive clicks.
 * **The Solution:** Deployed a TextBlob NLP sentiment pipeline across viewer comment feeds, mined unicode emoji reactions, and measured the impact of headline punctuation on organic views.
 * **Visual Result:** Established that viral content maintains a **53.6% positive sentiment baseline**, mapped 😂 and ❤️ as the dominant emotional drivers, and proved titles with an exclamation mark (`!`) earn **+52% higher median viewership**.
@@ -69,7 +60,7 @@ Rather than standalone code, every project here is engineered to solve a specifi
 
 ---
 
-#### 6. [IPL Match Strategy & Player Performance Analytics](./IPL%20Data%20Analytics)
+#### 5. [IPL Match Strategy & Player Performance Analytics](./IPL%20Data%20Analytics)
 * **The Problem:** T20 cricket teams often over-rely on coin tosses and overpay for players based on aggregate run totals rather than contextual impact.
 * **The Solution:** Analyzed 816 historical fixtures and 190,000+ ball-by-ball deliveries across 12+ seasons, tracking toss decision trends and filtering batsman performance strictly in overs 16–20 (death overs).
 * **Visual Result:** Disproved the "toss winner wins match" myth (toss win conversion is only **51.2%**), highlighted the tactical shift to chasing (80%+ field first since 2016), and proved AB de Villiers leads all-time death overs lethality with a **232.4 Strike Rate**.

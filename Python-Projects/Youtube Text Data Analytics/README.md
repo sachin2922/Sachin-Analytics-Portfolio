@@ -40,10 +40,10 @@ Digital media brands, corporate marketing teams, and content creators invest mil
 
 ### 📊 Visual Representation of Results
 
-#### 1. Audience Sentiment Polarity — 53.6% Positive Baseline
+#### 1. Audience Sentiment Polarity — 68.2% Positive Baseline
 ![Sentiment Distribution](assets/sentiment_distribution.png)
-* **Finding:** Trending YouTube videos enjoy a strongly positive audience bias: **53.6% Positive**, **33.1% Neutral**, and only **13.3% Negative**.
-* **Takeaway:** If a brand's video receives greater than 20% negative sentiment, it represents an immediate red flag that requires PR or product team intervention.
+* **Finding:** Trending YouTube videos enjoy a strongly positive audience bias: **68.2% Positive**, **19.5% Neutral**, and only **12.3% Negative**.
+* **Takeaway:** Over 87.7% of comment volume maintains non-negative sentiment. If a brand's video receives greater than 20% negative sentiment, it represents an immediate red flag that requires PR or product team intervention.
 
 ---
 

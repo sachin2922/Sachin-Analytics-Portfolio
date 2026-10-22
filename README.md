@@ -19,7 +19,7 @@ The portfolio is structured into four specialized domain repositories below:
 | :--- | :--- | :--- | :--- |
 | **📈 RevOps Projects** | Deal Slippage Diagnostics, Pipeline Health Scoring, ACV Benchmarks, CRM Governance | Salesforce, SQL, Power BI, DAX | [📁 View RevOps Projects](./RevOps-Projects) |
 | **📊 Commercial Analytics Projects** | Workforce Capacity Modeling, Sprint Benchmark Allocation, Ticket Complexity, TAT SLA | Tableau, SQL, Excel Modeling | [📁 View Commercial Analytics](./Commercial-Analytics-Projects) |
-| **🐍 Python Projects** | 6 Production Analytics Suites: CRM ETL, E-Commerce Market Basket, Zomato Geospatial, S&P 500 Time Series, YouTube NLP, IPL Match Telemetry | Python (Pandas, NumPy, NLP, Stats) | [📁 View Python Projects](./Python-Projects) |
+| **🐍 Python Projects** | 5 Production Analytics Suites: E-Commerce Market Basket, Zomato Geospatial, S&P 500 Time Series, YouTube NLP, IPL Match Telemetry | Python (Pandas, NumPy, NLP, Stats) | [📁 View Python Projects](./Python-Projects) |
 | **💾 SQL Projects** | 2 Enterprise Production Suites: Supermart Commercial Retail Analytics & CRM Pipeline Health Scoring | PostgreSQL, Snowflake, MS SQL | [📁 View SQL Projects](./SQL-Projects) |
 
 ---
@@ -44,7 +44,6 @@ For hiring managers and recruiters looking for immediate interactive product dem
 
 | Project Suite | Core Analytical Discovery | Tech & Key Methods | Direct Access |
 | :--- | :--- | :--- | :--- |
-| **Salesforce CRM Pipeline ETL** | 0–100 algorithmic risk scoring surfacing 28% of pipeline in critical intervention | Pandas, Dwell-Time SLAs, Anomaly Flags | [👉 Open Suite](./Python-Projects/Salesforce%20CRM%20Pipeline%20ETL) |
 | **E-Commerce Sales & Market Basket** | Mined 185K+ orders; isolated 11 AM & 7 PM conversion surges and checkout bundles | Combinatorial Pairs, Elasticity | [👉 Open Suite](./Python-Projects/E-Commerce%20Sales%20Data%20Analytics) |
 | **Zomato Geospatial Market Intelligence** | Proved delivery partners earn +0.24 higher rating; mapped Bangalore dining hotspots | SQLite, N-Gram Mining, Clustering | [👉 Open Suite](./Python-Projects/Zomato%20Geospatial%20Data%20Analytics) |
 | **S&P 500 Time-Series Risk Engine** | Disproved tech diversification (>0.90 co-movement); 50-day SMA macro floor | Rolling SMAs, Volatility Distributions | [👉 Open Suite](./Python-Projects/S%26P%20Global%20Time%20Series%20Stock%20Market%20Data%20Analytics) |
