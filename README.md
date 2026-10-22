@@ -1,7 +1,7 @@
-# Commercial Analytics & Revenue Operations Portfolio
+# Commercial Analytics & Business Intelligence Portfolio
 
 <p align="center">
-  <img src="https://img.shields.io/badge/Focus-Market%20Intelligence%20|%20RevOps-353744?style=for-the-badge" alt="Domain" />
+  <img src="https://img.shields.io/badge/Focus-Commercial%20Analytics%20|%20Business%20Intelligence-353744?style=for-the-badge" alt="Domain" />
   <img src="https://img.shields.io/badge/Stack-SQL%20|%20Python%20|%20Power%20BI%20|%20Salesforce-1155CC?style=for-the-badge" alt="Tech Stack" />
   <img src="https://img.shields.io/badge/Live%20Demos-Available-00AB44?style=for-the-badge&logo=github" alt="Live Demos" />
 </p>
@@ -34,6 +34,21 @@ For hiring managers and recruiters looking for immediate interactive product dem
 2. **[Utilization & Efficiency Tracker (click to open)](https://sachin2922.github.io/Sachin-Analytics-Portfolio/Commercial-Analytics-Projects/Utilization%20%26%20Efficiency%20Tracker.html)**  
    *Full-scale workforce capacity planning suite tracking team utilization, timesheet allocation, ticket resolution velocity, and system TAT benchmarks.*  
    * **Key Outcome:** -60% manual reporting overhead, +40% TAT delivery acceleration.
+
+---
+
+### 🐍 Production Python Analytics & Engineering Suites
+
+*Production-grade data pipelines, NLP sentiment engines, and quantitative modeling with standalone visual telemetry.*
+
+| Project Suite | Core Analytical Discovery | Tech & Key Methods | Direct Access |
+| :--- | :--- | :--- | :--- |
+| **[Salesforce CRM Pipeline ETL (click to open)](./Python-Projects/Salesforce%20CRM%20Pipeline%20ETL)** | 0–100 algorithmic risk scoring surfacing 28% of pipeline in critical intervention | Pandas, Dwell-Time SLAs, Anomaly Flags | [👉 Open Suite](./Python-Projects/Salesforce%20CRM%20Pipeline%20ETL) |
+| **[E-Commerce Sales & Market Basket (click to open)](./Python-Projects/E-Commerce%20Sales%20Data%20Analytics)** | Mined 185K+ orders; isolated 11 AM & 7 PM conversion surges and checkout bundles | Combinatorial Pairs, Elasticity | [👉 Open Suite](./Python-Projects/E-Commerce%20Sales%20Data%20Analytics) |
+| **[Zomato Geospatial Market Intelligence (click to open)](./Python-Projects/Zomato%20Geospatial%20Data%20Analytics)** | Proved delivery partners earn +0.24 higher rating; mapped Bangalore dining hotspots | SQLite, N-Gram Mining, Clustering | [👉 Open Suite](./Python-Projects/Zomato%20Geospatial%20Data%20Analytics) |
+| **[S&P 500 Time-Series Risk Engine (click to open)](./Python-Projects/S%26P%20Global%20Time%20Series%20Stock%20Market%20Data%20Analytics)** | Disproved tech diversification (>0.90 co-movement); 50-day SMA macro floor | Rolling SMAs, Volatility Distributions | [👉 Open Suite](./Python-Projects/S%26P%20Global%20Time%20Series%20Stock%20Market%20Data%20Analytics) |
+| **[YouTube Audience Sentiment NLP (click to open)](./Python-Projects/Youtube%20Text%20Data%20Analytics)** | Mined comment streams; proved exclamation mark titles achieve +52% median views | TextBlob Sentiment, Emoji Parsing | [👉 Open Suite](./Python-Projects/Youtube%20Text%20Data%20Analytics) |
+| **[IPL Match Strategy & Finisher Telemetry (click to open)](./Python-Projects/IPL%20Data%20Analytics)** | Disproved coin-toss advantage (51.2% win rate); AB de Villiers leads with 232.4 death SR | Ball-by-Ball Analysis, Phase Splits | [👉 Open Suite](./Python-Projects/IPL%20Data%20Analytics) |
 
 ---
 
