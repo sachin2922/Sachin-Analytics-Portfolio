@@ -6,7 +6,8 @@
   <img src="https://img.shields.io/badge/Live%20Demos-Available-00AB44?style=for-the-badge&logo=github" alt="Live Demos" />
 </p>
 
-Welcome to my central analytics and business intelligence portfolio. This repository showcases production-grade data modeling, automated ETL pipelines, predictive revenue forecasting, and executive decision-support systems designed for enterprise leadership.
+> **Transforming raw operational noise into predictable revenue and executive clarity.**  
+Welcome to my **Commercial Analytics & Business Intelligence** portfolio. Backed by 4+ years of cross-regional experience across EMEA & APAC, this repository showcases production-grade data modeling, automated ETL pipelines, predictive revenue forecasting, and interactive decision suites engineered to eliminate operational bottlenecks and drive measurable business growth.
 
 The portfolio is structured into four specialized domain repositories below:
 
