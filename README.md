@@ -53,6 +53,17 @@ For hiring managers and recruiters looking for immediate interactive product dem
 
 ---
 
+### 💾 Enterprise SQL Architecture & Analytics Suites
+
+*Production-grade database modeling, multi-tier Common Table Expressions (CTEs), and analytic window functions.*
+
+| Project Suite | Core Analytical Discovery | Tech & Key Methods | Direct Access |
+| :--- | :--- | :--- | :--- |
+| **Supermart Commercial Retail Analytics** | Mined \$2.3M P&L; identified >20% discount margin collapse (-119%) & isolated 48% VIP profit | PostgreSQL, Star Schema, Window Functions (`NTILE`, `DENSE_RANK`), P&L Joins | [👉 Open Suite](./SQL-Projects/Supermart-Commercial-Retail-Analytics) |
+| **Salesforce CRM Pipeline Health Scoring** | Modeled 6 CRM objects; audited stage dwell SLAs, surfacing \$2.85M at-risk deals via 0–100 scoring | PostgreSQL, 6 SF Objects DDL, Dwell SLAs, Algorithmic Health Scoring | [👉 Open Suite](./SQL-Projects/Salesforce-Pipeline-Health-Scoring) |
+
+---
+
 ### 🛠️ Core Analytical & Technical Toolset
 
 * **Business Intelligence & Visualization:** Power BI, Tableau, Advanced Excel (Power Query, Dynamic Pivot Models, DAX Measures, Executive Telemetry Dashboards)
