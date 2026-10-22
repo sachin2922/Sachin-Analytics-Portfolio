@@ -43,12 +43,12 @@ For hiring managers and recruiters looking for immediate interactive product dem
 
 | Project Suite | Core Analytical Discovery | Tech & Key Methods | Direct Access |
 | :--- | :--- | :--- | :--- |
-| **[Salesforce CRM Pipeline ETL (click to open)](./Python-Projects/Salesforce%20CRM%20Pipeline%20ETL)** | 0–100 algorithmic risk scoring surfacing 28% of pipeline in critical intervention | Pandas, Dwell-Time SLAs, Anomaly Flags | [👉 Open Suite](./Python-Projects/Salesforce%20CRM%20Pipeline%20ETL) |
-| **[E-Commerce Sales & Market Basket (click to open)](./Python-Projects/E-Commerce%20Sales%20Data%20Analytics)** | Mined 185K+ orders; isolated 11 AM & 7 PM conversion surges and checkout bundles | Combinatorial Pairs, Elasticity | [👉 Open Suite](./Python-Projects/E-Commerce%20Sales%20Data%20Analytics) |
-| **[Zomato Geospatial Market Intelligence (click to open)](./Python-Projects/Zomato%20Geospatial%20Data%20Analytics)** | Proved delivery partners earn +0.24 higher rating; mapped Bangalore dining hotspots | SQLite, N-Gram Mining, Clustering | [👉 Open Suite](./Python-Projects/Zomato%20Geospatial%20Data%20Analytics) |
-| **[S&P 500 Time-Series Risk Engine (click to open)](./Python-Projects/S%26P%20Global%20Time%20Series%20Stock%20Market%20Data%20Analytics)** | Disproved tech diversification (>0.90 co-movement); 50-day SMA macro floor | Rolling SMAs, Volatility Distributions | [👉 Open Suite](./Python-Projects/S%26P%20Global%20Time%20Series%20Stock%20Market%20Data%20Analytics) |
-| **[YouTube Audience Sentiment NLP (click to open)](./Python-Projects/Youtube%20Text%20Data%20Analytics)** | Mined comment streams; proved exclamation mark titles achieve +52% median views | TextBlob Sentiment, Emoji Parsing | [👉 Open Suite](./Python-Projects/Youtube%20Text%20Data%20Analytics) |
-| **[IPL Match Strategy & Finisher Telemetry (click to open)](./Python-Projects/IPL%20Data%20Analytics)** | Disproved coin-toss advantage (51.2% win rate); AB de Villiers leads with 232.4 death SR | Ball-by-Ball Analysis, Phase Splits | [👉 Open Suite](./Python-Projects/IPL%20Data%20Analytics) |
+| **Salesforce CRM Pipeline ETL** | 0–100 algorithmic risk scoring surfacing 28% of pipeline in critical intervention | Pandas, Dwell-Time SLAs, Anomaly Flags | [👉 Open Suite](./Python-Projects/Salesforce%20CRM%20Pipeline%20ETL) |
+| **E-Commerce Sales & Market Basket** | Mined 185K+ orders; isolated 11 AM & 7 PM conversion surges and checkout bundles | Combinatorial Pairs, Elasticity | [👉 Open Suite](./Python-Projects/E-Commerce%20Sales%20Data%20Analytics) |
+| **Zomato Geospatial Market Intelligence** | Proved delivery partners earn +0.24 higher rating; mapped Bangalore dining hotspots | SQLite, N-Gram Mining, Clustering | [👉 Open Suite](./Python-Projects/Zomato%20Geospatial%20Data%20Analytics) |
+| **S&P 500 Time-Series Risk Engine** | Disproved tech diversification (>0.90 co-movement); 50-day SMA macro floor | Rolling SMAs, Volatility Distributions | [👉 Open Suite](./Python-Projects/S%26P%20Global%20Time%20Series%20Stock%20Market%20Data%20Analytics) |
+| **YouTube Audience Sentiment NLP** | Mined comment streams; proved exclamation mark titles achieve +52% median views | TextBlob Sentiment, Emoji Parsing | [👉 Open Suite](./Python-Projects/Youtube%20Text%20Data%20Analytics) |
+| **IPL Match Strategy & Finisher Telemetry** | Disproved coin-toss advantage (51.2% win rate); AB de Villiers leads with 232.4 death SR | Ball-by-Ball Analysis, Phase Splits | [👉 Open Suite](./Python-Projects/IPL%20Data%20Analytics) |
 
 ---
 
