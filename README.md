@@ -60,7 +60,7 @@ For hiring managers and recruiters looking for immediate interactive product dem
 | Project Suite | Core Analytical Discovery | Tech & Key Methods | Direct Access |
 | :--- | :--- | :--- | :--- |
 | **Supermart Commercial Retail Analytics** | Mined \$2.3M P&L; identified >20% discount margin collapse (-119%) & isolated 48% VIP profit | PostgreSQL, Star Schema, Window Functions (`NTILE`, `DENSE_RANK`), P&L Joins | [👉 Open Suite](./SQL-Projects/Supermart-Commercial-Retail-Analytics) |
-| **Salesforce CRM Pipeline Health Scoring** | Modeled 6 CRM objects; audited stage dwell SLAs, surfacing \$2.85M at-risk deals via 0–100 scoring | PostgreSQL, 6 SF Objects DDL, Dwell SLAs, Algorithmic Health Scoring | [👉 Open Suite](./SQL-Projects/Salesforce-Pipeline-Health-Scoring) |
+| **Salesforce CRM Pipeline Health Scoring** | Modeled 1.6M+ records across 6 CRM objects (180K pre-sales tickets, 156K brand accounts, 345K opps); powers Live RevOps Dashboard | PostgreSQL, 6 Objects DDL, Multi-Opp Rollup, Hierarchy CTEs | [👉 Open Suite](./SQL-Projects/Salesforce-Pipeline-Health-Scoring) |
 
 ---
 

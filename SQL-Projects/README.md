@@ -31,11 +31,12 @@ Welcome to my central SQL repository. This portfolio showcases production-grade 
 
 ---
 
-#### 2. [Salesforce Opportunity Dwell Time & Pipeline Health Scoring](./Salesforce-Pipeline-Health-Scoring)
-* **The Problem:** Sales leaders often discover deal slippage in the final week of the quarter because CRM systems lack vectorized dwell-time auditing.
-* **The SQL Architecture:** Engineered a declarative, multi-tier CTE pipeline (`Stage_Benchmarks`, `Cleaned_Deals`, `Dwell_Calculations`, `Health_Score_Tier`, `Final_Summary_View`).
-* **Technical Highlights:** Window functions (`DENSE_RANK()`, `SUM() OVER PARTITION`), SARGable date filtering, and automated 0–100 composite health scoring.
-* **Commercial Impact:** **+15% ARR expansion** by surfacing 28% of pipeline deals in the *Critical Intervention* band before quarter-end.
+#### 2. [Enterprise Salesforce CRM Pipeline Health Scoring & Revenue Governance (PostgreSQL)](./Salesforce-Pipeline-Health-Scoring)
+* **The Problem:** Sales leaders discover deal slippage in the final week of the quarter because standard CRM reports lack vectorized dwell-time auditing, pre-sales ticket interlock, and multi-deal account visibility.
+* **The SQL Architecture:** Engineered an enterprise relational engine across **1.6M+ records & 6 Salesforce objects**: `sf_presales_data` (180K tickets), `sf_account` (156K brand accounts: Nike, Adidas, etc.), `sf_opportunity` (345K multi-opp deals), `sf_user` (3,782 employee hierarchy: AE $\rightarrow$ Mgr $\rightarrow$ VP $\rightarrow$ SVP), `sf_opportunity_field_history` (609K audit events), and `sf_contact` (312K stakeholders).
+* **Direct Dashboard Lineage:** Serves as the direct underlying data layer powering the [Live RevOps Pipeline Health Dashboard](../RevOps-Projects/RevOps_Pipeline_Health_Dashboard.html).
+* **Technical Highlights:** Recursive management hierarchy rollups, SARGable date filtering, window functions (`DENSE_RANK()`), and 0–100 composite risk scoring.
+* **Commercial Impact:** **+15% ARR expansion** by surfacing 27.7% of pipeline deals (\$3.43M) in the *Critical Intervention* band and proving pre-sales tickets resolved within 24 hrs increase win rates to 46.4%.
 
 ---
 

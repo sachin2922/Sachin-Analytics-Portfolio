@@ -60,6 +60,20 @@ This section highlights strategic Revenue Operations (RevOps) solutions built to
 
 ---
 
+### 🏛️ 5. Underlying Relational SQL Architecture (1.6M+ Records)
+
+This dashboard is powered directly by our production-grade **PostgreSQL Salesforce CRM Data Engine**:
+* **Pre-Sales Tickets (`sf_presales_data` | 180,000 Rows):** Solves stage bottlenecks by tracking technical PoCs, security RFPs, and resolution SLAs.
+* **Customer Accounts (`sf_account` | 156,034 Rows):** Customer accounts featuring real enterprise brands (**Nike, Adidas, Microsoft, Apple, Walmart, Spotify**).
+* **Pipeline Deals (`sf_opportunity` | 345,005 Rows):** Multi-opportunity structure enabling portfolio ARR concentration analysis.
+* **Internal Employees (`sf_user` | 3,782 Rows):** Hierarchical organizational structure (**AE $\rightarrow$ Sales Manager $\rightarrow$ Regional VP $\rightarrow$ SVP / CRO**).
+* **Audit Trail (`sf_opportunity_field_history` | 608,997 Rows):** Powers stage dwell-time calculations and stuck deal alerts.
+* **Customer Contacts (`sf_contact` | 312,450 Rows):** Maps executive champions and economic buyers to enterprise deals.
+
+👉 **[Explore the PostgreSQL Pipeline Health & Scoring SQL Suite](../SQL-Projects/Salesforce-Pipeline-Health-Scoring)**
+
+---
+
 ### 📁 Files in This Directory
 
 * 🌐 **`RevOps_Pipeline_Health_Dashboard.html`**: Standalone production-grade interactive dashboard file.
