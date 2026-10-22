@@ -1,0 +1,24 @@
+# Ignore large raw dataset dumps (>100MB) to keep repository lightweight and under GitHub limits
+*.sqlite
+*.sqlite3
+*.db
+*.ftr
+*.feather
+*.csv
+*.tsv
+*.zip
+*.tar.gz
+
+# Exclude multi-hundred raw folder bundles
+individual_stocks_5yr/
+additional_data/
+
+# Python & Jupyter cache files
+__pycache__/
+*.py[cod]
+*$py.class
+.ipynb_checkpoints/
+.pytest_cache/
+.env
+venv/
+.venv/

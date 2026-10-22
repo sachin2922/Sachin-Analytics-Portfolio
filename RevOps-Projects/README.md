@@ -1,4 +1,4 @@
-# Revenue Operations (RevOps) & Pipeline Health Project
+# Revenue Operations (RevOps) & Pipeline Health Projects
 
 <p align="center">
   <img src="https://img.shields.io/badge/Domain-Revenue%20Operations-1155CC?style=for-the-badge" alt="Domain" />
