@@ -1,63 +1,45 @@
-# Advanced SQL Architecture & Analytics Projects
+# Enterprise SQL Architecture & Analytics Portfolio
 
 <p align="center">
-  <img src="https://img.shields.io/badge/Language-SQL%20(ANSI%20Standard)-00758F?style=for-the-badge&logo=mysql&logoColor=white" alt="SQL" />
-  <img src="https://img.shields.io/badge/Techniques-CTEs%20|%20Window%20Functions%20|%20Partitions-1155CC?style=for-the-badge" alt="Techniques" />
-  <img src="https://img.shields.io/badge/Database-PostgreSQL%20|%20Snowflake%20|%20MS%20SQL-353744?style=for-the-badge" alt="Database" />
+  <img src="https://img.shields.io/badge/Stack-SQL%20(PostgreSQL%20|%20Snowflake%20|%20MS%20SQL)-00758F?style=for-the-badge&logo=postgresql&logoColor=white" alt="SQL Stack" />
+  <img src="https://img.shields.io/badge/Specializations-Star%20Schema%20|%20CTEs%20|%20Window%20Functions-1155CC?style=for-the-badge" alt="Specializations" />
+  <img src="https://img.shields.io/badge/Projects-2%20Production%20Suites-00AB44?style=for-the-badge" alt="Projects" />
 </p>
 
-This repository contains enterprise-grade SQL architectures designed for commercial analytics, multi-stage revenue modeling, and complex analytical deep-dives.
+Welcome to my central SQL repository. This portfolio showcases production-grade database modeling, multi-tier Common Table Expressions (CTEs), analytical window functions, and business intelligence query pipelines designed for high-performance decision support.
 
 ---
 
-### 🚀 Highlighted Project: Multi-Tier Opportunity Dwell Time & Pipeline Health Scoring
+### 📂 Specialized SQL Projects Directory
 
-* **Query Script:** [`pipeline_health_scoring_ctes.sql`](./pipeline_health_scoring_ctes.sql)
-* **Core Patterns:** Multi-level Common Table Expressions (CTEs), Analytic Window Functions (`DENSE_RANK()`, `SUM() OVER PARTITION`), Conditional Aggregations, and Date Arithmetic.
-
-#### 🎯 Business Context
-To empower C-suite leaders with real-time revenue predictability, raw transactional CRM logs must be modeled into aggregated, risk-scored metrics. This SQL script replaces fragile procedural loops with a declarative, vectorized pipeline that evaluates deal slippage and dwell-time risk.
-
-#### 🧠 Modular CTE Pipeline Architecture
-
-```text
-┌────────────────────────┐
-│  Stage_Benchmarks CTE  │  --> Defines historical SLA dwell-time per sales stage
-└───────────┬────────────┘
-            │
-┌───────────▼────────────┐
-│   Cleaned_Deals CTE    │  --> Normalizes dates, joins Account tiers, handles nulls
-└───────────┬────────────┘
-            │
-┌───────────▼────────────┐
-│ Dwell_Calculations CTE │  --> Computes days in stage, total deal age, benchmark ratios
-└───────────┬────────────┘
-            │
-┌───────────▼────────────┐
-│  Health_Score_Tier CTE │  --> Generates composite score (0-100) & classifies health bands
-└───────────┬────────────┘
-            │
-┌───────────▼────────────┐
-│   Final Summary View   │  --> Yields executive-ready revenue exposure and triage priority
-└────────────────────────┘
-```
+| Project Domain | Core Business Question Solved | Key SQL Techniques & Methods | Explore Project |
+| :--- | :--- | :--- | :--- |
+| **🛒 Supermart Commercial Retail Analytics** | *Where is our \$2.3M retail revenue losing profit, and at what discount % do orders turn negative?* | Star Schema (Fact/Dims), Window Functions (`NTILE`, `DENSE_RANK`), P&L Joins, Seasonality | [👉 Open Suite](./Supermart-Commercial-Retail-Analytics) |
+| **💼 Salesforce Pipeline Health Scoring** | *Which CRM deals are stagnating past SLA benchmarks and putting quarterly ARR at risk?* | Multi-tier Modular CTEs, Dwell-Time SLAs, Composite Algorithmic Health Scoring (0–100) | [👉 Open Suite](./Salesforce-Pipeline-Health-Scoring) |
 
 ---
 
-### 💡 Advanced SQL Features Demonstrated
-
-* **Multi-Tier CTEs:** Decouples complex business transformations into testable, maintainable logical units.
-* **Window Functions:** Computes running totals, account-level opportunity ranks, and stage progression velocities.
-* **Conditional Weighting:** Formulates weighted penalty functions directly inside SQL to eliminate middle-tier transformation bottlenecks.
-* **Index & Query Optimization:** Designed with SARGable predicate filtering (`WHERE o.is_closed = FALSE`) to optimize execution plan costs on large datasets.
+### 🚀 Highlighted Project Overviews
 
 ---
 
-### 📁 Files in This Directory
-
-* 💾 **[`pipeline_health_scoring_ctes.sql`](./pipeline_health_scoring_ctes.sql)**: Production SQL script demonstrating multi-level CTEs, window functions, and pipeline risk categorization.
-* 📄 **`README.md`**: Project overview, architectural flow, and query design principles.
+#### 1. [Supermart Commercial Retail Analytics & Customer Intelligence](./Supermart-Commercial-Retail-Analytics)
+* **The Problem:** An omnichannel retail enterprise generated \$2.3M in sales, but severe promotional discounting (up to 80%) eroded bottom-line margins in categories like Furniture (yielding an anemic 2.49% net margin).
+* **The SQL Architecture:** Modeled 10,000+ transaction rows into a relational Star Schema (`dim_customer`, `dim_product`, `fact_sales`). Analyzed category P&L performance, discount bleed sensitivity, and customer lifetime value (LTV).
+* **Visual Insights:** Established that discounts **above 20%** cause net profit to collapse into negative territory (**-10% to -119% loss** per order) and proved Q4 holiday surges account for 35% of annual revenue.
+* **Commercial Impact:** Capped discounting at 15% on high-bleed categories, recovering **~\$85K in lost profits**, and isolated top 10% VIP accounts generating 48% of gross profit.
 
 ---
 
-[⬅️ Return to Main Portfolio Hub](../README.md)
+#### 2. [Salesforce Opportunity Dwell Time & Pipeline Health Scoring](./Salesforce-Pipeline-Health-Scoring)
+* **The Problem:** Sales leaders often discover deal slippage in the final week of the quarter because CRM systems lack vectorized dwell-time auditing.
+* **The SQL Architecture:** Engineered a declarative, multi-tier CTE pipeline (`Stage_Benchmarks`, `Cleaned_Deals`, `Dwell_Calculations`, `Health_Score_Tier`, `Final_Summary_View`).
+* **Technical Highlights:** Window functions (`DENSE_RANK()`, `SUM() OVER PARTITION`), SARGable date filtering, and automated 0–100 composite health scoring.
+* **Commercial Impact:** **+15% ARR expansion** by surfacing 28% of pipeline deals in the *Critical Intervention* band before quarter-end.
+
+---
+
+### 🛠️ Core Database Competencies Demonstrated
+* **Relational Schema Design:** Star Schema Normalization, Primary/Foreign Key Integrity, Fact/Dimension Table Modeling.
+* **Advanced Querying & Aggregations:** Multi-tier CTEs, Analytic Window Functions (`DENSE_RANK`, `ROW_NUMBER`, `NTILE`, `LAG`, `LEAD`), Rolling Running Totals.
+* **Performance Tuning & Optimization:** B-Tree Composite Indexing, SARGable Predicate Filtering, NULL-safe arithmetic (`NULLIF`), Query Execution Plan Cost Reduction.

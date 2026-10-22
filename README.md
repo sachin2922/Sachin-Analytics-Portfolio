@@ -20,7 +20,7 @@ The portfolio is structured into four specialized domain repositories below:
 | **📈 RevOps Projects** | Deal Slippage Diagnostics, Pipeline Health Scoring, ACV Benchmarks, CRM Governance | Salesforce, SQL, Power BI, DAX | [📁 View RevOps Projects](./RevOps-Projects) |
 | **📊 Commercial Analytics Projects** | Workforce Capacity Modeling, Sprint Benchmark Allocation, Ticket Complexity, TAT SLA | Tableau, SQL, Excel Modeling | [📁 View Commercial Analytics](./Commercial-Analytics-Projects) |
 | **🐍 Python Projects** | 6 Production Analytics Suites: CRM ETL, E-Commerce Market Basket, Zomato Geospatial, S&P 500 Time Series, YouTube NLP, IPL Match Telemetry | Python (Pandas, NumPy, NLP, Stats) | [📁 View Python Projects](./Python-Projects) |
-| **💾 SQL Projects** | Complex Multi-Table CTEs, Window Functions, Retention Cohorts, Schema Normalization | PostgreSQL, Snowflake, MS SQL | [📁 View SQL Projects](./SQL-Projects) |
+| **💾 SQL Projects** | 2 Enterprise Production Suites: Supermart Commercial Retail Analytics & CRM Pipeline Health Scoring | PostgreSQL, Snowflake, MS SQL | [📁 View SQL Projects](./SQL-Projects) |
 
 ---
 
